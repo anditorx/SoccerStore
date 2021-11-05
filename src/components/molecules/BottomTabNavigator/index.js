@@ -67,9 +67,13 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     backgroundColor: colors.primary,
-    marginBottom: 30,
-    marginHorizontal: 30,
-    borderRadius: 30,
+
+    // marginBottom: 30,
+    // marginHorizontal: 30,
+    // borderRadius: 30,
+
+    // paddingBottom: 10,
+    // paddingTop: 15,
 
     position: 'absolute',
     left: 0,

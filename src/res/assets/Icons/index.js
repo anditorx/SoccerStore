@@ -5,6 +5,8 @@ import IC_JerseyOn from './ic_jersey_on.svg';
 import IC_JerseyOff from './ic_jersey_off.svg';
 import IC_ProfileOn from './ic_profile_on.svg';
 import IC_ProfileOff from './ic_profile_off.svg';
+import IC_ShoppingCart from './ic_shopping_cart.svg';
+import IC_Search from './ic_search.svg';
 
 export {
   IC_LogoBig,
@@ -14,4 +16,6 @@ export {
   IC_JerseyOff,
   IC_ProfileOn,
   IC_ProfileOff,
+  IC_ShoppingCart,
+  IC_Search,
 };
