@@ -1,16 +1,16 @@
 import React from 'react';
 import {SafeAreaView, StatusBar, StyleSheet, Text, View} from 'react-native';
-import {Header} from '../../components';
+import {BannerSlider, Header} from '../../components';
 import {colors} from '../../res';
 import {windowHeight} from '../../utils/responsive';
 
 const Home = () => {
   return (
-    <SafeAreaView style={{backgroundColor: colors.primary, flex: 1}}>
+    <SafeAreaView style={styles.safeArea}>
       <StatusBar barStyle="light-content" />
       <Header />
-      <View style={{flex: 1, backgroundColor: 'white'}}>
-        <Text>HEllo</Text>
+      <View style={styles.content}>
+        <BannerSlider />
       </View>
     </SafeAreaView>
   );
@@ -19,8 +19,10 @@ const Home = () => {
 export default Home;
 
 const styles = StyleSheet.create({
+  safeArea: {backgroundColor: colors.primary, flex: 1},
   screen: {
     flex: 1,
     backgroundColor: 'yellow',
   },
+  content: {flex: 1, backgroundColor: 'white'},
 });
