@@ -1,7 +1,8 @@
 import React from 'react';
 import {SafeAreaView, StatusBar, StyleSheet, Text, View} from 'react-native';
-import {BannerSlider, Header} from '../../components';
-import {colors} from '../../res';
+import {BannerSlider, Header, List} from '../../components';
+import {colors, fonts} from '../../res';
+import {Liga} from '../../res/dummies/liga';
 import {windowHeight} from '../../utils/responsive';
 
 const Home = () => {
@@ -11,6 +12,10 @@ const Home = () => {
       <Header />
       <View style={styles.content}>
         <BannerSlider />
+        <View style={styles.wrapperLiga}>
+          <Text style={styles.titleLiga}>Pilih Liga</Text>
+          <List type="liga" data={Liga} />
+        </View>
       </View>
     </SafeAreaView>
   );
@@ -25,4 +30,11 @@ const styles = StyleSheet.create({
     backgroundColor: 'yellow',
   },
   content: {flex: 1, backgroundColor: 'white'},
+  wrapperLiga: {
+    padding: 20,
+  },
+  titleLiga: {
+    fontSize: 18,
+    fontFamily: fonts.Regular,
+  },
 });

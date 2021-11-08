@@ -1,4 +1,4 @@
 export * from './assets';
 export * from './colors';
-// export * from './strings';
-// export * from './fonts';
+export * from './dummies';
+export * from './fonts';

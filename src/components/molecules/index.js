@@ -3,6 +3,7 @@ import TabItemBottomNavigator from './TabItemBottomNavigator';
 import Header from './Header';
 import ShoppingCart from './ShoppingCart';
 import BannerSlider from './BannerSlider';
+import List from './List';
 
 export {
   BottomTabNavigator,
@@ -10,4 +11,5 @@ export {
   Header,
   ShoppingCart,
   BannerSlider,
+  List,
 };
