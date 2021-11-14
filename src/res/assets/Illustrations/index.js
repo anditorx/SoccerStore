@@ -5,6 +5,7 @@ import IL_LIGA_ITALY from './il_liga_seriea.png';
 import IL_LIGA_INGGRIS from './il_liga_premierleague.png';
 import IL_LIGA_GERMANY from './il_liga_bundesliga.png';
 import IL_LIGA_SPANYOL from './il_liga_laliga.png';
+import IL_Avatar from './il_avatar.png';
 
 export {
   IL_PlayFootball,
@@ -14,4 +15,5 @@ export {
   IL_LIGA_INGGRIS,
   IL_LIGA_GERMANY,
   IL_LIGA_SPANYOL,
+  IL_Avatar,
 };

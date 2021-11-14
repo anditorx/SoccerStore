@@ -1,2 +1,3 @@
 import Liga from './liga';
-export {Liga};
+import DummiesJersey from './jersey';
+export {Liga, DummiesJersey};

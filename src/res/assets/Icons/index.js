@@ -7,6 +7,11 @@ import IC_ProfileOn from './ic_profile_on.svg';
 import IC_ProfileOff from './ic_profile_off.svg';
 import IC_ShoppingCart from './ic_shopping_cart.svg';
 import IC_Search from './ic_search.svg';
+import IC_EditPassword from './ic_edit_password.svg';
+import IC_EditProfile from './ic_edit_profile.svg';
+import IC_Shirt from './ic_shirt.svg';
+import IC_Signout from './ic_signout.svg';
+import IC_ArrowRight from './ic_arrow_right.svg';
 
 export {
   IC_LogoBig,
@@ -18,4 +23,9 @@ export {
   IC_ProfileOff,
   IC_ShoppingCart,
   IC_Search,
+  IC_EditPassword,
+  IC_EditProfile,
+  IC_Shirt,
+  IC_Signout,
+  IC_ArrowRight,
 };
