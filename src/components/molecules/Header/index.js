@@ -12,7 +12,18 @@ import {Gap} from '../..';
 import {colors, IC_Search, IC_ShoppingCart} from '../../../res';
 import {responsiveHeight, windowWidth} from '../../../utils/responsive';
 
-const Header = () => {
+const Header = ({type, icon, onPress}) => {
+  if (type === 'only-back') {
+    return (
+      <View style={styles.container}>
+        <View style={styles.wrapper}>
+          <TouchableOpacity style={styles.wrapperBtnBack} onPress={onPress}>
+            {icon}
+          </TouchableOpacity>
+        </View>
+      </View>
+    );
+  }
   return (
     <View style={styles.container}>
       <View style={styles.wrapper}>
@@ -57,4 +68,5 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
   sectionCart: {justifyContent: 'center', alignItems: 'center'},
+  wrapperBtnBack: {backgroundColor: 'white', padding: 5, borderRadius: 20},
 });

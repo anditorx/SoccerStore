@@ -4,7 +4,7 @@ import * as React from 'react';
 import {View, Text} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
-import {Home, Jersey, Profile, Splash} from '../screens';
+import {Home, Jersey, JerseyDetail, Profile, Splash} from '../screens';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {BottomTabNavigator} from '../components';
 
@@ -32,6 +32,11 @@ function Router() {
       <Stack.Screen
         name="MainApp"
         component={MainApp}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="JerseyDetail"
+        component={JerseyDetail}
         options={{headerShown: false}}
       />
     </Stack.Navigator>

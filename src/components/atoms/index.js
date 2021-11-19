@@ -1,2 +1,4 @@
 import Gap from './Gap';
-export {Gap};
+import CardLiga from './CardLiga';
+import Separator from './Separator';
+export {Gap, CardLiga, Separator};

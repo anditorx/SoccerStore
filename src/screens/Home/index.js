@@ -14,7 +14,7 @@ import {Liga} from '../../res/dummies/liga';
 import {DummiesJersey} from '../../res/dummies/jersey';
 import {windowHeight} from '../../utils/responsive';
 
-const Home = () => {
+const Home = ({navigation}) => {
   return (
     <SafeAreaView style={styles.safeArea}>
       <StatusBar barStyle="light-content" />
@@ -33,7 +33,7 @@ const Home = () => {
                 <Text style={styles.textSeeAll}>Lihat Semua</Text>
               </TouchableOpacity>
             </View>
-            <List type="jersey" data={DummiesJersey} />
+            <List type="jersey" data={DummiesJersey} navigation={navigation} />
           </View>
           <Gap height={100} />
         </View>
