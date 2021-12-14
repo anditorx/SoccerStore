@@ -15,12 +15,10 @@ import {responsiveHeight, windowWidth} from '../../../utils/responsive';
 const Header = ({type, icon, onPress}) => {
   if (type === 'only-back') {
     return (
-      <View style={styles.container}>
-        <View style={styles.wrapper}>
-          <TouchableOpacity style={styles.wrapperBtnBack} onPress={onPress}>
-            {icon}
-          </TouchableOpacity>
-        </View>
+      <View style={styles.containerOnlyBack}>
+        <TouchableOpacity style={styles.wrapperBtnBack} onPress={onPress}>
+          {icon}
+        </TouchableOpacity>
       </View>
     );
   }
@@ -45,8 +43,15 @@ export default Header;
 const styles = StyleSheet.create({
   container: {
     height: responsiveHeight(125),
-    backgroundColor: colors.primary,
+    backgroundColor: colors.transparent,
     paddingHorizontal: 20,
+    zIndex: 99,
+  },
+  containerOnlyBack: {
+    backgroundColor: colors.transparent,
+    paddingHorizontal: 20,
+    paddingTop: 20,
+    zIndex: 99,
   },
   wrapper: {
     flexDirection: 'row',
@@ -68,5 +73,11 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
   sectionCart: {justifyContent: 'center', alignItems: 'center'},
-  wrapperBtnBack: {backgroundColor: 'white', padding: 5, borderRadius: 20},
+  wrapperBtnBack: {
+    backgroundColor: 'white',
+    padding: 5,
+    borderRadius: 40,
+    height: 40,
+    width: 40,
+  },
 });

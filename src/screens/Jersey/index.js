@@ -13,7 +13,7 @@ import {Liga} from '../../res/dummies/liga';
 import {DummiesJersey} from '../../res/dummies/jersey';
 import {windowHeight} from '../../utils/responsive';
 
-const Jersey = () => {
+const Jersey = ({navigation}) => {
   return (
     <SafeAreaView style={styles.safeArea}>
       <StatusBar barStyle="light-content" />
@@ -26,7 +26,7 @@ const Jersey = () => {
           </View>
           <View style={styles.wrapperJersey}>
             <Text style={styles.titleJersey}>Pilih Jersey</Text>
-            <List type="jersey" data={DummiesJersey} />
+            <List type="jersey" data={DummiesJersey} navigation={navigation} />
           </View>
           <Gap height={100} />
         </View>

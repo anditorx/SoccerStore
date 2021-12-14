@@ -15,8 +15,8 @@ const index = ({type, data, name, icon, onPress, navigation}) => {
   if (type === 'liga') {
     return (
       <View style={styles.containerLiga}>
-        {data.map(item => {
-          return <CardLiga data={item} key={item.index} />;
+        {data.map((item, index) => {
+          return <CardLiga data={item} key={index} />;
         })}
       </View>
     );

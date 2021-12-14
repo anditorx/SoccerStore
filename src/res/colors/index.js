@@ -6,4 +6,6 @@ export const colors = {
   grey: '#8D92A3',
   peace: '#a4b0be',
   lightGrey: 'rgba(196, 196, 196, 0.5)',
+  transparent: 'transparent',
+  border: '#C4C4C4',
 };
