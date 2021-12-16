@@ -43,12 +43,7 @@ const JerseyDetail = ({route, navigation}) => {
       <Header
         type="only-back"
         icon={<IC_ArrowLeft />}
-        onPress={() =>
-          navigation.reset({
-            index: 0,
-            routes: [{name: 'MainApp'}],
-          })
-        }
+        onPress={() => navigation.goBack()}
       />
       <Slider image={dataParam.image} />
       <KeyboardAwareScrollView ref={actionSheetRef}>

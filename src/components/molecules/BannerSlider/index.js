@@ -27,6 +27,7 @@ export default BannerSlider;
 const styles = StyleSheet.create({
   contianer: {
     marginTop: -25,
+    zIndex: 99,
   },
   slider: {
     borderRadius: 10,

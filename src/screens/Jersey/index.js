@@ -15,9 +15,12 @@ import {windowHeight} from '../../utils/responsive';
 
 const Jersey = ({navigation}) => {
   return (
-    <SafeAreaView style={styles.safeArea}>
+    <>
+      <SafeAreaView style={styles.safeAreaTop} />
       <StatusBar barStyle="light-content" />
-      <ScrollView showsVerticalScrollIndicator={false}>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        style={styles.scrollView}>
         <Header />
         <View style={styles.content}>
           <View style={styles.wrapperLiga}>
@@ -31,19 +34,19 @@ const Jersey = ({navigation}) => {
           <Gap height={100} />
         </View>
       </ScrollView>
-    </SafeAreaView>
+    </>
   );
 };
 
 export default Jersey;
 
 const styles = StyleSheet.create({
-  safeArea: {backgroundColor: colors.primary, flex: 1},
+  safeAreaTop: {flex: 0, backgroundColor: colors.primary},
+  safeArea: {flex: 1, backgroundColor: colors.transparent},
   screen: {
     flex: 1,
-    backgroundColor: 'yellow',
   },
-  content: {flex: 1, backgroundColor: 'white', top: -20},
+  content: {flex: 1, backgroundColor: colors.transparent},
   wrapperLiga: {
     padding: 20,
   },
@@ -58,4 +61,5 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontFamily: fonts.Regular,
   },
+  scrollView: {backgroundColor: colors.white},
 });

@@ -1,3 +1,4 @@
+import {NavigationContainer, useNavigation} from '@react-navigation/native';
 import React from 'react';
 import {
   StyleSheet,
@@ -9,10 +10,28 @@ import {
 } from 'react-native';
 import {ShoppingCart} from '..';
 import {Gap} from '../..';
-import {colors, IC_Search, IC_ShoppingCart} from '../../../res';
+import {
+  colors,
+  fonts,
+  IC_ArrowLeft,
+  IC_Search,
+  IC_ShoppingCart,
+} from '../../../res';
 import {responsiveHeight, windowWidth} from '../../../utils/responsive';
 
-const Header = ({type, icon, onPress}) => {
+const Header = ({type, icon, onPress, text}) => {
+  const navigation = useNavigation();
+  if (type === 'back-and-title') {
+    return (
+      <View style={styles.containerBackAndTitle}>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
+          <IC_ArrowLeft />
+        </TouchableOpacity>
+        <Gap width={20} />
+        <Text style={styles.title}>{text}</Text>
+      </View>
+    );
+  }
   if (type === 'only-back') {
     return (
       <View style={styles.containerOnlyBack}>
@@ -23,7 +42,7 @@ const Header = ({type, icon, onPress}) => {
     );
   }
   return (
-    <View style={styles.container}>
+    <View style={styles.containerPrimary}>
       <View style={styles.wrapper}>
         <View style={styles.sectionSearch}>
           <IC_Search />
@@ -41,6 +60,12 @@ const Header = ({type, icon, onPress}) => {
 export default Header;
 
 const styles = StyleSheet.create({
+  containerPrimary: {
+    height: responsiveHeight(125),
+    backgroundColor: colors.primary,
+    paddingHorizontal: 20,
+    zIndex: 99,
+  },
   container: {
     height: responsiveHeight(125),
     backgroundColor: colors.transparent,
@@ -72,7 +97,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginLeft: 10,
   },
-  sectionCart: {justifyContent: 'center', alignItems: 'center'},
+  sectionCart: {justifyContent: 'center', alignItems: 'center', zIndex: 99},
   wrapperBtnBack: {
     backgroundColor: 'white',
     padding: 5,
@@ -80,4 +105,11 @@ const styles = StyleSheet.create({
     height: 40,
     width: 40,
   },
+  containerBackAndTitle: {
+    paddingHorizontal: 20,
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 5,
+  },
+  title: {fontFamily: fonts.Bold, fontSize: 24},
 });

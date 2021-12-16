@@ -12,16 +12,17 @@ import {BannerSlider, Gap, Header, List} from '../../components';
 import {colors, fonts} from '../../res';
 import {Liga} from '../../res/dummies/liga';
 import {DummiesJersey} from '../../res/dummies/jersey';
-import {windowHeight} from '../../utils/responsive';
+import {windowHeight, windowWidth} from '../../utils';
 
 const Home = ({navigation}) => {
   return (
-    <SafeAreaView style={styles.safeArea}>
+    <>
+      <SafeAreaView style={styles.safeAreaTop} />
       <StatusBar barStyle="light-content" />
       <ScrollView showsVerticalScrollIndicator={false}>
         <Header />
+        <BannerSlider />
         <View style={styles.content}>
-          <BannerSlider />
           <View style={styles.wrapperLiga}>
             <Text style={styles.titleLiga}>Pilih Liga</Text>
             <List type="liga" data={Liga} />
@@ -38,19 +39,22 @@ const Home = ({navigation}) => {
           <Gap height={100} />
         </View>
       </ScrollView>
-    </SafeAreaView>
+    </>
   );
 };
 
 export default Home;
 
 const styles = StyleSheet.create({
-  safeArea: {backgroundColor: colors.primary, flex: 1},
+  safeAreaTop: {flex: 0, backgroundColor: colors.primary},
+  safeArea: {backgroundColor: colors.white, flex: 1},
   screen: {
     flex: 1,
-    backgroundColor: 'yellow',
   },
-  content: {flex: 1, backgroundColor: 'white'},
+  content: {
+    flex: 1,
+    backgroundColor: 'white',
+  },
   wrapperLiga: {
     padding: 20,
   },

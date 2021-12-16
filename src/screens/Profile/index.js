@@ -29,9 +29,10 @@ import {
 
 const Profile = () => {
   return (
-    <SafeAreaView style={styles.safeArea}>
+    <>
+      <SafeAreaView style={styles.safeArea} />
       <StatusBar barStyle="light-content" />
-      <ScrollView showsVerticalScrollIndicator={false}>
+      <ScrollView showsVerticalScrollIndicator={false} style={styles.screen}>
         <View style={styles.content}>
           <View style={styles.wrapperHead}>
             <View style={styles.wrapperAvatar}>
@@ -66,17 +67,17 @@ const Profile = () => {
           </View>
         </View>
       </ScrollView>
-    </SafeAreaView>
+    </>
   );
 };
 
 export default Profile;
 
 const styles = StyleSheet.create({
-  safeArea: {backgroundColor: colors.primary, flex: 1},
+  safeArea: {backgroundColor: colors.primary, flex: 0},
   screen: {
     flex: 1,
-    backgroundColor: 'yellow',
+    backgroundColor: colors.primary,
   },
   content: {
     flex: 1,

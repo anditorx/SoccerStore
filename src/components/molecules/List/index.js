@@ -7,11 +7,22 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {CardLiga} from '../..';
+import {CardLiga, CardShoppingCart} from '../..';
 import {colors, fonts, IC_ArrowRight, IC_EditProfile} from '../../../res';
 import {responsiveHeight, responsiveWidth} from '../../../utils/responsive';
 
 const index = ({type, data, name, icon, onPress, navigation}) => {
+  if (type === 'cart-list') {
+    return (
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <View>
+          {data.map((item, index) => {
+            return <CardShoppingCart data={item} key={index} />;
+          })}
+        </View>
+      </ScrollView>
+    );
+  }
   if (type === 'liga') {
     return (
       <View style={styles.containerLiga}>

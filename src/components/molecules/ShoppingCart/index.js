@@ -1,10 +1,14 @@
+import {useNavigation} from '@react-navigation/native';
 import React from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {colors, IC_ShoppingCart} from '../../../res';
 
 const ShoppingCart = ({value}) => {
+  const navigation = useNavigation();
   return (
-    <TouchableOpacity style={styles.wrapperIconCart}>
+    <TouchableOpacity
+      style={styles.wrapperIconCart}
+      onPress={() => navigation.navigate('Cart')}>
       <IC_ShoppingCart />
       {value && value !== 0 ? (
         <View style={styles.wrapperCount}>

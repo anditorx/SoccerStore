@@ -14,6 +14,7 @@ import IC_Shirt from './ic_shirt.svg';
 import IC_Signout from './ic_signout.svg';
 import IC_ArrowRight from './ic_arrow_right.svg';
 import IC_ArrowLeft from './ic_arrow_left.svg';
+import IC_CloseRed from './fa-solid_times.svg';
 
 export {
   IC_LogoBig,
@@ -32,4 +33,5 @@ export {
   IC_Signout,
   IC_ArrowRight,
   IC_ArrowLeft,
+  IC_CloseRed,
 };
