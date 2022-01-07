@@ -94,7 +94,7 @@ const JerseyDetail = ({route, navigation}) => {
               placeholder="Keterangan"
             />
             <Gap height={25} />
-            <Button text="Masukkan Keeranjang" icon={IC_ShoppingCartWhite} />
+            <Button text="Masukkan Keranjang" icon={IC_ShoppingCartWhite} />
           </View>
         </View>
       </KeyboardAwareScrollView>
