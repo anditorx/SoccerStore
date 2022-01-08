@@ -3,7 +3,17 @@ import Splash from './Splash';
 import Jersey from './Jersey';
 import JerseyDetail from './Jersey/Detail';
 import Profile from './Profile';
+import EditProfile from './Profile/EditProfile';
 import Cart from './Cart';
 import Checkout from './Checkout';
 
-export {Home, Splash, Jersey, JerseyDetail, Profile, Cart, Checkout};
+export {
+  Home,
+  Splash,
+  Jersey,
+  JerseyDetail,
+  Profile,
+  Cart,
+  Checkout,
+  EditProfile,
+};

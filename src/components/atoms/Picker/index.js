@@ -36,7 +36,7 @@ const Picker = ({expedition, fontSize, datas, label, height, width}) => {
             borderColor: colors.border,
           }}
           editable={false}
-          placeholder={expedition ? '' : 'Pilih Ukuran'}
+          placeholder={`Pilih ${label}`}
           value={textInputValue}
         />
       </ModalSelector>

@@ -1,4 +1,6 @@
 import Liga from './liga';
 import DummiesJersey from './jersey';
 import DummiesOrders from './orders';
-export {Liga, DummiesJersey, DummiesOrders};
+import * as DummiesCouriers from './couriers';
+import * as DummiesProfile from './profile';
+export {Liga, DummiesJersey, DummiesOrders, DummiesCouriers, DummiesProfile};

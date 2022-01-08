@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   Image,
   SafeAreaView,
@@ -11,6 +11,7 @@ import {
 import {BannerSlider, Gap, Header, List} from '../../components';
 import {
   colors,
+  DummiesProfile,
   fonts,
   IC_ArrowRight,
   IC_EditPassword,
@@ -27,7 +28,9 @@ import {
   windowHeight,
 } from '../../utils/responsive';
 
-const Profile = () => {
+const Profile = ({navigation}) => {
+  const [dataProfile, setDataProfile] = useState(DummiesProfile.Profile);
+
   return (
     <>
       <SafeAreaView style={styles.safeArea} />
@@ -36,14 +39,13 @@ const Profile = () => {
         <View style={styles.content}>
           <View style={styles.wrapperHead}>
             <View style={styles.wrapperAvatar}>
-              <Image source={IL_Avatar} style={styles.image} />
+              <Image source={dataProfile.avatar} style={styles.image} />
             </View>
             <View style={styles.desc}>
-              <Text style={styles.textName}>John Doe</Text>
-              <Text style={styles.text}>No Hp. 085881209231</Text>
+              <Text style={styles.textName}>{dataProfile.nama}</Text>
+              <Text style={styles.text}>No Hp. {dataProfile.nomerHp}</Text>
               <Text style={styles.text}>
-                Jalan Damai No.28 RT002/003, Kelurahan Pegangsaan, Kecamatan
-                Kebayoran Baru, Jakarta Selatan 12210
+                {dataProfile.alamat}, {dataProfile.kota}, {dataProfile.provinsi}
               </Text>
             </View>
           </View>
@@ -52,6 +54,7 @@ const Profile = () => {
               type="list-profile"
               icon={<IC_EditProfile />}
               name="Edit Profile"
+              onPress={() => navigation.navigate('EditProfile', dataProfile)}
             />
             <List
               type="list-profile"

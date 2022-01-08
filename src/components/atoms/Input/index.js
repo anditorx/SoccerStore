@@ -3,7 +3,7 @@ import React, {useEffect, useState} from 'react';
 import {StyleSheet, Text, TextInput, View, ActionSheetIOS} from 'react-native';
 import {colors, fonts} from '../../../res';
 
-const Input = ({type, label, height, width, fontSize, placeholder}) => {
+const Input = ({type, label, height, width, fontSize, placeholder, value}) => {
   const [selectedValue, setSelectedValue] = useState('');
   const [data, setData] = useState(null);
 
@@ -16,6 +16,7 @@ const Input = ({type, label, height, width, fontSize, placeholder}) => {
           placeholder={placeholder}
           multiline
           numberOfLines={4}
+          value={value}
         />
       </View>
     );
@@ -26,6 +27,7 @@ const Input = ({type, label, height, width, fontSize, placeholder}) => {
       <TextInput
         style={styles.input(fontSize, width, height)}
         placeholder={placeholder}
+        value={value}
       />
     </View>
   );
