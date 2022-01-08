@@ -3,7 +3,7 @@ import {StyleSheet, Text, TextInput, View} from 'react-native';
 import ModalSelector from 'react-native-modal-selector';
 import {colors, fonts} from '../../../res';
 
-const Picker = ({fontSize, datas, label, height, width}) => {
+const Picker = ({expedition, fontSize, datas, label, height, width}) => {
   const [sizeJersey, setSizeJersey] = useState(null);
   const [textInputValue, setTextInputValue] = useState('');
 
@@ -36,7 +36,7 @@ const Picker = ({fontSize, datas, label, height, width}) => {
             borderColor: colors.border,
           }}
           editable={false}
-          placeholder="Pilih Ukuran"
+          placeholder={expedition ? '' : 'Pilih Ukuran'}
           value={textInputValue}
         />
       </ModalSelector>

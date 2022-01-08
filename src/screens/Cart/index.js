@@ -10,17 +10,12 @@ import {
   windowWidth,
 } from '../../utils';
 
-const Cart = () => {
+const Cart = ({navigation}) => {
   const [orders, setOrders] = useState(DummiesOrders[0]);
   console.tron.log('orders', orders);
-  return (
-    <SafeAreaView style={styles.safeArea}>
-      <StatusBar barStyle="dark-content" />
-      <Header type="back-and-title" text={'Cart'} />
-      <View style={styles.content}>
-        <List type="cart-list" data={orders.pesanans} />
-      </View>
-      {/* footer */}
+
+  const _renderFooter = () => {
+    return (
       <View style={styles.footer}>
         <View style={styles.totalHarga}>
           <Text style={styles.txtTotal}>Total Harga :</Text>
@@ -33,8 +28,21 @@ const Cart = () => {
           icon={IC_ShoppingCartWhite}
           padding={responsiveHeight(15)}
           fontSize={18}
+          onPress={() => navigation.navigate('Checkout')}
         />
       </View>
+    );
+  };
+
+  return (
+    <SafeAreaView style={styles.safeArea}>
+      <StatusBar barStyle="dark-content" />
+      <Header type="back-and-title" text={'Cart'} />
+      <View style={styles.content}>
+        <List type="cart-list" data={orders.pesanans} />
+      </View>
+      {/* footer */}
+      {_renderFooter()}
     </SafeAreaView>
   );
 };

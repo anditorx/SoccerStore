@@ -4,7 +4,15 @@ import * as React from 'react';
 import {View, Text} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
-import {Cart, Home, Jersey, JerseyDetail, Profile, Splash} from '../screens';
+import {
+  Cart,
+  Checkout,
+  Home,
+  Jersey,
+  JerseyDetail,
+  Profile,
+  Splash,
+} from '../screens';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {BottomTabNavigator} from '../components';
 
@@ -42,6 +50,11 @@ function Router() {
       <Stack.Screen
         name="Cart"
         component={Cart}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="Checkout"
+        component={Checkout}
         options={{headerShown: false}}
       />
     </Stack.Navigator>

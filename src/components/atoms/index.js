@@ -5,4 +5,14 @@ import Input from './Input';
 import Picker from './Picker';
 import Button from './Button';
 import CardShoppingCart from './CardShoppingCart';
-export {Gap, CardLiga, Separator, Input, Picker, Button, CardShoppingCart};
+import CardAddress from './CardAddress';
+export {
+  Gap,
+  CardLiga,
+  Separator,
+  Input,
+  Picker,
+  Button,
+  CardShoppingCart,
+  CardAddress,
+};
