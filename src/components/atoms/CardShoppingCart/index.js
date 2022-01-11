@@ -9,7 +9,6 @@ import {
 } from '../../../utils';
 
 const CardShoppingCart = ({data}) => {
-  console.tron.log('data CardShoppingCart', data);
   return (
     <View style={styles.container}>
       <Image source={data.product.gambar[0]} style={styles.image} />

@@ -15,7 +15,7 @@ import {
 export const DummiesOrders = [
   {
     id: 1,
-    tanggalPemesanan: 'Jumat, 18 September 2020',
+    tanggalPemesanan: 'Kamis, 17 September 2020',
     status: 'keranjang',
     totalHarga: 500000,
     berat: 1,

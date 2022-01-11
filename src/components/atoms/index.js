@@ -6,6 +6,8 @@ import Picker from './Picker';
 import Button from './Button';
 import CardShoppingCart from './CardShoppingCart';
 import CardAddress from './CardAddress';
+import CardHistoryOrder from './CardHistoryOrder';
+import HeaderRegister from './HeaderRegister';
 export {
   Gap,
   CardLiga,
@@ -15,4 +17,6 @@ export {
   Button,
   CardShoppingCart,
   CardAddress,
+  CardHistoryOrder,
+  HeaderRegister,
 };

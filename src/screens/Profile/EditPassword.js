@@ -19,74 +19,38 @@ import {
 } from '../../res';
 import {responsiveHeight, responsiveWidth, windowHeight} from '../../utils';
 
-const EditProfile = ({navigation, route}) => {
+const EditPassword = ({navigation, route}) => {
   const [dataProfile, setDataProfile] = useState(route?.params);
   return (
     <SafeAreaView style={styles.safeArea}>
       <StatusBar barStyle="dark-content" />
-      <Header type="back-and-title" text={'Edit Profile'} />
+      <Header type="back-and-title" text={'Edit Password'} />
       {/* content */}
       <View style={styles.content}>
         <ScrollView>
-          <View style={styles.wrapperHead}>
-            <TouchableOpacity style={styles.wrapperAvatar}>
-              <Image source={dataProfile.avatar} style={styles.image} />
-              <View>
-                <Image
-                  source={IL_CAMERA}
-                  style={{
-                    height: 40,
-                    width: 40,
-                    position: 'absolute',
-                    right: 0,
-                    bottom: 0,
-                  }}
-                />
-              </View>
-            </TouchableOpacity>
-          </View>
           <Input
-            label="Nama"
+            label="Password Lama"
             width={'100%'}
             height={responsiveHeight(45)}
             fontSize={13}
-            value={dataProfile.nama}
+            password
+            // value={dataProfile.nama}
           />
           <Input
-            label="Email"
+            label="Password Baru"
             width={'100%'}
             height={responsiveHeight(45)}
             fontSize={13}
-            value={dataProfile.email}
+            password
+            // value={dataProfile.email}
           />
           <Input
-            label="No Handphone"
+            label="Konfirmasi Password"
             width={'100%'}
             height={responsiveHeight(45)}
             fontSize={13}
-            value={dataProfile.nomerHp}
-          />
-          <Input
-            type="textarea"
-            label="Alamat"
-            fontSize={13}
-            value={dataProfile.alamat}
-          />
-          <Picker
-            type="picker"
-            label="Provinsi"
-            width={'100%'}
-            height={responsiveHeight(45)}
-            fontSize={13}
-            // datas={dataParam.ukuran}
-          />
-          <Picker
-            type="picker"
-            label="Kota / Kabupaten"
-            width={'100%'}
-            height={responsiveHeight(45)}
-            fontSize={13}
-            // datas={dataParam.ukuran}
+            password
+            // value={dataProfile.email}
           />
         </ScrollView>
         <Button
@@ -100,7 +64,7 @@ const EditProfile = ({navigation, route}) => {
   );
 };
 
-export default EditProfile;
+export default EditPassword;
 
 const styles = StyleSheet.create({
   safeArea: {backgroundColor: colors.white, flex: 1},

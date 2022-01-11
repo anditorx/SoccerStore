@@ -3,7 +3,16 @@ import React, {useEffect, useState} from 'react';
 import {StyleSheet, Text, TextInput, View, ActionSheetIOS} from 'react-native';
 import {colors, fonts} from '../../../res';
 
-const Input = ({type, label, height, width, fontSize, placeholder, value}) => {
+const Input = ({
+  type,
+  label,
+  height,
+  width,
+  fontSize,
+  placeholder,
+  value,
+  password,
+}) => {
   const [selectedValue, setSelectedValue] = useState('');
   const [data, setData] = useState(null);
 
@@ -28,6 +37,7 @@ const Input = ({type, label, height, width, fontSize, placeholder, value}) => {
         style={styles.input(fontSize, width, height)}
         placeholder={placeholder}
         value={value}
+        secureTextEntry={password ? true : false}
       />
     </View>
   );

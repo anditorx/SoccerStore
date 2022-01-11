@@ -11,9 +11,15 @@ const Picker = ({expedition, fontSize, datas, label, height, width}) => {
     const data = [];
 
     if (datas) {
-      datas.map((item, index) => {
-        data.push({key: index++, label: item});
-      });
+      if (label === 'Provinsi') {
+        datas.map((item, index) => {
+          data.push({key: index++, label: item.name});
+        });
+      } else {
+        datas.map((item, index) => {
+          data.push({key: index++, label: item});
+        });
+      }
     }
 
     return (

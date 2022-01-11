@@ -60,11 +60,13 @@ const Profile = ({navigation}) => {
               type="list-profile"
               icon={<IC_EditPassword />}
               name="Change Password"
+              onPress={() => navigation.navigate('EditPassword', dataProfile)}
             />
             <List
               type="list-profile"
               icon={<IC_Shirt />}
               name="Riwayat Pemesanan"
+              onPress={() => navigation.navigate('HistoryOrder')}
             />
             <List type="list-profile" icon={<IC_Signout />} name="Keluar" />
           </View>

@@ -12,7 +12,6 @@ import {
 
 const Cart = ({navigation}) => {
   const [orders, setOrders] = useState(DummiesOrders[0]);
-  console.tron.log('orders', orders);
 
   const _renderFooter = () => {
     return (

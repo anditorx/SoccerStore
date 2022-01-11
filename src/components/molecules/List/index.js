@@ -7,8 +7,9 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {CardLiga, CardShoppingCart} from '../..';
+import {CardHistoryOrder, CardLiga, CardShoppingCart, Gap} from '../..';
 import {colors, fonts, IC_ArrowRight, IC_EditProfile} from '../../../res';
+import {numberWithCommas} from '../../../utils';
 import {responsiveHeight, responsiveWidth} from '../../../utils/responsive';
 
 const index = ({type, data, name, icon, onPress, navigation}) => {
@@ -58,6 +59,17 @@ const index = ({type, data, name, icon, onPress, navigation}) => {
         </View>
         <IC_ArrowRight />
       </TouchableOpacity>
+    );
+  }
+  if (type === 'history-order') {
+    return (
+      <ScrollView>
+        <View style={styles.containerHistoryOrder}>
+          {data.map(pesanan => {
+            return <CardHistoryOrder data={pesanan} key={pesanan.id} />;
+          })}
+        </View>
+      </ScrollView>
     );
   }
   return (
@@ -126,5 +138,9 @@ const styles = StyleSheet.create({
     shadowRadius: 2.22,
 
     elevation: 3,
+  },
+  containerHistoryOrder: {
+    marginHorizontal: 5,
+    marginTop: 20,
   },
 });

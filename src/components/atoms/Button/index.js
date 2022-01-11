@@ -9,7 +9,7 @@ const Button = ({...props}) => {
       onPress={props.onPress}
       style={{
         backgroundColor: colors.primary,
-        paddingVertical: 17,
+        paddingVertical: 15,
         // paddingHorizontal: 70,
         borderRadius: 5,
         justifyContent: 'center',
@@ -21,7 +21,7 @@ const Button = ({...props}) => {
           justifyContent: 'center',
           alignItems: 'center',
         }}>
-        {<props.icon />}
+        {props.type !== 'text-only' && <props.icon />}
         <Text
           style={{
             marginLeft: 10,

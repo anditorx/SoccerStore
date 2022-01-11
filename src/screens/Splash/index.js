@@ -10,7 +10,7 @@ import styles from './styles';
 const Splash = ({navigation}) => {
   useEffect(() => {
     setTimeout(() => {
-      navigation.reset({index: 0, routes: [{name: 'MainApp'}]});
+      navigation.reset({index: 0, routes: [{name: 'Login'}]});
     }, 2000);
   }, [navigation]);
   return (

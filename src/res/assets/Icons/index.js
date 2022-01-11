@@ -16,6 +16,8 @@ import IC_ArrowRight from './ic_arrow_right.svg';
 import IC_ArrowLeft from './ic_arrow_left.svg';
 import IC_CloseRed from './fa-solid_times.svg';
 import IC_NEXT_WHITE from './ic_next_white.svg';
+import IC_REGIS_1 from './ic_regis_1.svg';
+import IC_REGIS_2 from './ic_regis_2.svg';
 
 export {
   IC_LogoBig,
@@ -36,4 +38,6 @@ export {
   IC_ArrowLeft,
   IC_CloseRed,
   IC_NEXT_WHITE,
+  IC_REGIS_1,
+  IC_REGIS_2,
 };
