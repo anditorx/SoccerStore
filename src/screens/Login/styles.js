@@ -9,7 +9,11 @@ const styles = StyleSheet.create({
     // alignItems: 'center',
     backgroundColor: colors.white,
   },
-  wrapperLogo: {justifyContent: 'center', alignItems: 'center', marginTop: 50},
+  wrapperLogo: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 25,
+  },
   footer: {position: 'absolute', bottom: 10},
   txtVersion: {textAlign: 'center'},
   wrapperLottie: {
@@ -18,7 +22,7 @@ const styles = StyleSheet.create({
     height: responsiveHeight(328),
     width: responsiveWidth(196),
     bottom: responsiveHeight(-70),
-    right: 0,
+    right: responsiveWidth(-50),
   },
   wrapperFormLogin: {
     backgroundColor: colors.white,

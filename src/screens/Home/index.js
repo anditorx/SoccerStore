@@ -19,7 +19,9 @@ const Home = ({navigation}) => {
     <>
       <SafeAreaView style={styles.safeAreaTop} />
       <StatusBar barStyle="light-content" />
-      <ScrollView showsVerticalScrollIndicator={false}>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        style={{backgroundColor: 'white'}}>
         <Header />
         <BannerSlider />
         <View style={styles.content}>

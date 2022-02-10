@@ -38,78 +38,81 @@ const JerseyDetail = ({route, navigation}) => {
   const dataParam = route.params;
   let actionSheet;
   return (
-    <SafeAreaView style={styles.safeArea}>
-      <StatusBar barStyle="light-content" />
-      <Header
-        type="only-back"
-        icon={<IC_ArrowLeft />}
-        onPress={() => navigation.goBack()}
-      />
-      <Slider image={dataParam.image} />
-      <KeyboardAwareScrollView ref={actionSheetRef}>
-        <View style={styles.content}>
-          <View style={styles.wrapperLiga}>
-            <CardLiga data={dataParam.liga} />
-          </View>
-          <View style={styles.desc}>
-            <Text style={styles.name}>{dataParam.name}</Text>
-            <Text style={styles.price}>
-              Rp {numberWithCommas(dataParam.harga)}
-            </Text>
-          </View>
-          <Separator
-            borderWidth={0.3}
-            marginHorizontal={20}
-            color={colors.lightGrey}
+    <>
+      <SafeAreaView style={styles.safeArea} />
+      <SafeAreaView style={{backgroundColor: colors.primary}}>
+        <StatusBar barStyle="light-content" />
+        <KeyboardAwareScrollView ref={actionSheetRef}>
+          <Header
+            type="only-back"
+            icon={<IC_ArrowLeft />}
+            onPress={() => navigation.goBack()}
           />
-
-          <View style={styles.contentDesc}>
-            <View style={styles.wrapperQualityAndWeight}>
-              <Text style={styles.textQNW}>Jenis : Replika Top Quality</Text>
-              <Text style={styles.textQNW}>Berat : 0.25 kg</Text>
+          <Slider image={dataParam.image} />
+          <View style={styles.content}>
+            <View style={styles.wrapperLiga}>
+              <CardLiga data={dataParam.liga} />
             </View>
-            <Gap height={10} />
-            <View
-              style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-              <Input
-                label="Jumlah"
-                width={responsiveWidth(120)}
-                height={responsiveHeight(45)}
-                fontSize={13}
-                placeholder="0"
-              />
-              <Picker
-                type="picker"
-                label="Ukuran"
-                width={responsiveWidth(120)}
-                height={responsiveHeight(45)}
-                fontSize={13}
-                datas={dataParam.ukuran}
-              />
+            <View style={styles.desc}>
+              <Text style={styles.name}>{dataParam.name}</Text>
+              <Text style={styles.price}>
+                Rp {numberWithCommas(dataParam.harga)}
+              </Text>
             </View>
-            <Input
-              type="textarea"
-              label="Keterangan"
-              fontSize={13}
-              placeholder="Keterangan"
+            <Separator
+              borderWidth={0.3}
+              marginHorizontal={20}
+              color={colors.lightGrey}
             />
-            <Gap height={25} />
-            <Button text="Masukkan Keranjang" icon={IC_ShoppingCartWhite} />
+
+            <View style={styles.contentDesc}>
+              <View style={styles.wrapperQualityAndWeight}>
+                <Text style={styles.textQNW}>Jenis : Replika Top Quality</Text>
+                <Text style={styles.textQNW}>Berat : 0.25 kg</Text>
+              </View>
+              <Gap height={10} />
+              <View
+                style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                <Input
+                  label="Jumlah"
+                  width={responsiveWidth(120)}
+                  height={responsiveHeight(45)}
+                  fontSize={13}
+                  placeholder="0"
+                />
+                <Picker
+                  type="picker"
+                  label="Ukuran"
+                  width={responsiveWidth(120)}
+                  height={responsiveHeight(45)}
+                  fontSize={13}
+                  datas={dataParam.ukuran}
+                />
+              </View>
+              <Input
+                type="textarea"
+                label="Keterangan"
+                fontSize={13}
+                placeholder="Keterangan"
+              />
+              <Gap height={25} />
+              <Button text="Masukkan Keranjang" icon={IC_ShoppingCartWhite} />
+            </View>
           </View>
-        </View>
-      </KeyboardAwareScrollView>
-    </SafeAreaView>
+        </KeyboardAwareScrollView>
+      </SafeAreaView>
+    </>
   );
 };
 
 export default JerseyDetail;
 
 const styles = StyleSheet.create({
-  safeArea: {backgroundColor: colors.primary},
+  safeArea: {backgroundColor: colors.primary, flex: 0},
   content: {
     // flex: 1,
     backgroundColor: 'white',
-    marginTop: responsiveHeight(windowHeight / 2),
+    marginTop: responsiveHeight(windowHeight / 2.5),
     height: responsiveHeight(windowHeight),
     borderTopRightRadius: 30,
     borderTopLeftRadius: 30,

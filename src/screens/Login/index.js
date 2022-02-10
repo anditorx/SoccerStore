@@ -17,8 +17,8 @@ const Login = ({navigation}) => {
           <IC_LogoBig />
         </View>
         <View style={styles.wrapperFormLogin}>
-          <Input label="Email" height={responsiveHeight(46)} />
-          <Input label="Password" password height={responsiveHeight(46)} />
+          <Input label="Email" height={responsiveHeight(50)} />
+          <Input label="Password" password height={responsiveHeight(50)} />
           <Gap height={25} />
           <Button text="Login" type="text-only" />
         </View>
@@ -31,7 +31,12 @@ const Login = ({navigation}) => {
         </View>
       </ScrollView>
       <View style={styles.wrapperLottie}>
-        <LottieView source={LOTTIE_Player01} autoPlay loop />
+        <LottieView
+          source={LOTTIE_Player01}
+          autoPlay
+          loop
+          style={{height: 150}}
+        />
       </View>
     </View>
   );

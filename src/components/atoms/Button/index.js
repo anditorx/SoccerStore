@@ -9,7 +9,7 @@ const Button = ({...props}) => {
       onPress={props.onPress}
       style={{
         backgroundColor: colors.primary,
-        paddingVertical: 15,
+        paddingVertical: 10,
         // paddingHorizontal: 70,
         borderRadius: 5,
         justifyContent: 'center',

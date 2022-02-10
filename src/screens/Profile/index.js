@@ -69,6 +69,7 @@ const Profile = ({navigation}) => {
               onPress={() => navigation.navigate('HistoryOrder')}
             />
             <List type="list-profile" icon={<IC_Signout />} name="Keluar" />
+            <Gap height={100} />
           </View>
         </View>
       </ScrollView>
@@ -86,9 +87,9 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
-    backgroundColor: 'white',
-    marginTop: responsiveHeight(windowHeight / 6),
-    height: responsiveHeight(windowHeight),
+    backgroundColor: colors.white,
+    marginTop: responsiveHeight(windowHeight),
+    // height: responsiveHeight(windowHeight),
     borderTopRightRadius: 30,
     borderTopLeftRadius: 30,
   },
