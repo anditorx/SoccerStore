@@ -1,9 +1,9 @@
-export const GET_USER = 'GET_USER';
+import * as ActionTypes from '../actionTypes.js';
 
 export const getUser = () => {
   return dispatch => {
     dispatch({
-      type: GET_USER,
+      type: ActionTypes.GET_USER,
       payload: {
         nama: 'Andi',
         email: 'andi@gmail.com',

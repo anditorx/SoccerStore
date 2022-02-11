@@ -5,6 +5,7 @@ import ShoppingCart from './ShoppingCart';
 import BannerSlider from './BannerSlider';
 import List from './List';
 import Slider from './Slider';
+import Loading from './Loading';
 
 export {
   BottomTabNavigator,
@@ -14,4 +15,5 @@ export {
   BannerSlider,
   List,
   Slider,
+  Loading,
 };

@@ -9,7 +9,6 @@ import {
 } from '../../../utils';
 
 const CardHistoryOrder = ({data}) => {
-  console.tron.log('dataOrder', data);
   return (
     <View style={styles.container}>
       <Text style={styles.textDate}>{data.tanggalPemesanan}</Text>

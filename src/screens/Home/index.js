@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -13,8 +13,18 @@ import {colors, fonts} from '../../res';
 import {Liga} from '../../res/dummies/liga';
 import {DummiesJersey} from '../../res/dummies/jersey';
 import {windowHeight, windowWidth} from '../../utils';
+// redux
+import {connect, useDispatch, useSelector} from 'react-redux';
+import {getUser} from '../../redux/actions';
 
 const Home = ({navigation}) => {
+  const dispatch = useDispatch();
+  const {dataUser} = useSelector(state => state.UserReducer);
+
+  useEffect(() => {
+    dispatch(getUser());
+  }, [dispatch]);
+
   return (
     <>
       <SafeAreaView style={styles.safeAreaTop} />

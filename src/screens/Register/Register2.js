@@ -1,4 +1,4 @@
-import React, {createRef} from 'react';
+import React, {createRef, useEffect, useState} from 'react';
 import {
   SafeAreaView,
   StatusBar,
@@ -15,23 +15,49 @@ import {
   IC_REGIS_2,
 } from '../../res';
 import {responsiveHeight, responsiveWidth} from '../../utils';
-import {Button, Gap, HeaderRegister, Input, Picker} from '../../components';
+import {
+  Button,
+  Gap,
+  HeaderRegister,
+  Input,
+  Loading,
+  Picker,
+} from '../../components';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import {useState} from 'react';
+// redux
+import {useDispatch, useSelector} from 'react-redux';
+import {getCityList, getProvinceList} from '../../redux/actions';
 
 const actionSheetRef = createRef();
 
 const Register2 = ({navigation}) => {
-  const [dataProvince, setDataProvince] = useState(
-    DummiesProvince.DummiesProvince,
+  const dispatch = useDispatch();
+  const {loading, dataProvince, dataCity} = useSelector(
+    state => state.RajaOngkirReducer,
   );
-  console.tron.log('dataProvince', dataProvince);
+
+  // const [dataProvince, setDataProvince] = useState(
+  //   DummiesProvince.DummiesProvince,
+  // );
+
+  useEffect(() => {
+    dispatch(getProvinceList());
+  }, [dispatch]);
+
+  const handlePickerProvince = option => {
+    dispatch(getCityList(option.key));
+  };
+  const handlePickerCity = option => {
+    dispatch(getCityList(option.key));
+  };
+
   return (
     <>
       <SafeAreaView style={styles.safeAreaTop} />
       <StatusBar barStyle="dark-content" />
       <View style={styles.screen}>
         <KeyboardAwareScrollView ref={actionSheetRef}>
+          {loading && <Loading />}
           {/* header */}
           <HeaderRegister
             type="register-2"
@@ -39,6 +65,7 @@ const Register2 = ({navigation}) => {
             title1="Isi Alamat"
             title2="Lengkap Anda"
           />
+
           {/* form card */}
           <View style={styles.wrapperCardForm}>
             <Input label={'Alamat'} type={'textarea'} />
@@ -49,6 +76,7 @@ const Register2 = ({navigation}) => {
               height={responsiveHeight(46)}
               fontSize={18}
               datas={dataProvince}
+              onSelected={handlePickerProvince}
             />
             <Picker
               type="picker"
@@ -56,7 +84,8 @@ const Register2 = ({navigation}) => {
               width={'100%'}
               height={responsiveHeight(46)}
               fontSize={18}
-              // datas={dataParam.ukuran}
+              datas={dataCity}
+              onSelected={handlePickerCity}
             />
             <Gap height={30} />
             <Button

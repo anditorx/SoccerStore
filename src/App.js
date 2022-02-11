@@ -1,15 +1,14 @@
 // In App.js in a new project
 
 import React, {useEffect} from 'react';
-import {View, Text} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
-import {Home, Splash} from './screens';
 import Router from './router';
-
-const Stack = createStackNavigator();
+import {Provider} from 'react-redux';
+import store from './redux/store';
 
 function App() {
+  // start - setup reactotron
   useEffect(() => {
     if (__DEV__) {
       import('./config/reactotronConfig').then(() =>
@@ -17,10 +16,14 @@ function App() {
       );
     }
   }, []);
+  // end - setup reactotron
+
   return (
-    <NavigationContainer>
-      <Router />
-    </NavigationContainer>
+    <Provider store={store}>
+      <NavigationContainer>
+        <Router />
+      </NavigationContainer>
+    </Provider>
   );
 }
 

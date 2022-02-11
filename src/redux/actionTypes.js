@@ -1,0 +1,14 @@
+// user
+export const GET_USER = 'GET_USER';
+
+// Raja Ongkir
+export const GET_PROVINCE_REQUEST = 'GET_PROVINCE_REQUEST';
+export const GET_PROVINCE_SUCCESS = 'GET_PROVINCE_SUCCESS';
+export const GET_PROVINCE_FAILED = 'GET_PROVINCE_FAILED';
+
+export const GET_CITY_REQUEST = 'GET_CITY_REQUEST';
+export const GET_CITY_SUCCESS = 'GET_CITY_SUCCESS';
+export const GET_CITY_FAILED = 'GET_CITY_FAILED';
+
+// General
+export const SHOW_LOADING = 'SHOW_LOADING';

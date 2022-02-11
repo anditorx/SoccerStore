@@ -8,4 +8,5 @@ export const colors = {
   lightGrey: 'rgba(196, 196, 196, 0.5)',
   transparent: 'transparent',
   border: '#C4C4C4',
+  loadingBackground: 'rgba(0, 0, 0, 0.3)',
 };
