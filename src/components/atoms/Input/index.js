@@ -12,6 +12,9 @@ const Input = ({
   placeholder,
   value,
   password,
+  onChangeText,
+  error,
+  onBlur,
 }) => {
   const [selectedValue, setSelectedValue] = useState('');
   const [data, setData] = useState(null);
@@ -26,6 +29,7 @@ const Input = ({
           multiline
           numberOfLines={4}
           value={value}
+          onChangeText={onChangeText}
         />
       </View>
     );
@@ -34,11 +38,18 @@ const Input = ({
     <View style={styles.container}>
       <Text style={styles.label(fontSize)}>{label}</Text>
       <TextInput
+        onBlur={onBlur}
         style={styles.input(fontSize, width, height)}
         placeholder={placeholder}
         value={value}
         secureTextEntry={password ? true : false}
+        onChangeText={onChangeText}
       />
+      {error ? (
+        <Text style={{color: 'red', fontSize: 12, textAlign: 'right'}}>
+          {error}
+        </Text>
+      ) : null}
     </View>
   );
 };
