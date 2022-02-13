@@ -14,7 +14,7 @@ import {
   IC_NEXT_WHITE,
   IC_REGIS_2,
 } from '../../res';
-import {responsiveHeight, responsiveWidth} from '../../utils';
+import {responsiveHeight, responsiveWidth, useForm} from '../../utils';
 import {
   Button,
   Gap,
@@ -24,31 +24,57 @@ import {
   Picker,
 } from '../../components';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import {Formik} from 'formik';
+import * as Yup from 'yup';
 // redux
 import {useDispatch, useSelector} from 'react-redux';
-import {getCityList, getProvinceList} from '../../redux/actions';
+import {getCityList, getProvinceList, registerUser} from '../../redux/actions';
 
 const actionSheetRef = createRef();
 
-const Register2 = ({navigation}) => {
+const Register2 = ({navigation, route}) => {
   const dispatch = useDispatch();
+  const dataParams = route?.params;
+
+  const [form, setForm] = useForm({
+    province: '',
+    city: '',
+  });
+  const formAddress = {
+    address: '',
+  };
+
+  // validation formik
+  const validationSchema = Yup.object({
+    address: Yup.string()
+      .trim()
+      .min(10, 'Address is too short!')
+      .required('Address is required!'),
+  });
+
   const {loading, dataProvince, dataCity} = useSelector(
     state => state.RajaOngkirReducer,
   );
 
-  // const [dataProvince, setDataProvince] = useState(
-  //   DummiesProvince.DummiesProvince,
-  // );
+  const {loadingAuth, dataUser, error, errorMessage, successAuth} = useSelector(
+    state => state.AuthReducer,
+  );
 
   useEffect(() => {
     dispatch(getProvinceList());
   }, [dispatch]);
 
   const handlePickerProvince = option => {
+    setForm('province', option.label);
     dispatch(getCityList(option.key));
   };
   const handlePickerCity = option => {
+    setForm('city', option.label);
     dispatch(getCityList(option.key));
+  };
+
+  const handleSubmit = data => {
+    dispatch(registerUser(data, dataParams?.password, navigation));
   };
 
   return (
@@ -58,6 +84,7 @@ const Register2 = ({navigation}) => {
       <View style={styles.screen}>
         <KeyboardAwareScrollView ref={actionSheetRef}>
           {loading && <Loading />}
+          {loadingAuth && <Loading />}
           {/* header */}
           <HeaderRegister
             type="register-2"
@@ -68,31 +95,75 @@ const Register2 = ({navigation}) => {
 
           {/* form card */}
           <View style={styles.wrapperCardForm}>
-            <Input label={'Alamat'} type={'textarea'} />
-            <Picker
-              type="picker"
-              label="Provinsi"
-              width={'100%'}
-              height={responsiveHeight(46)}
-              fontSize={18}
-              datas={dataProvince}
-              onSelected={handlePickerProvince}
-            />
-            <Picker
-              type="picker"
-              label="Kabupaten"
-              width={'100%'}
-              height={responsiveHeight(46)}
-              fontSize={18}
-              datas={dataCity}
-              onSelected={handlePickerCity}
-            />
-            <Gap height={30} />
-            <Button
-              text="Continue"
-              icon={IC_NEXT_WHITE}
-              onPress={() => navigation.navigate('MainApp')}
-            />
+            <Formik
+              initialValues={formAddress}
+              validationSchema={validationSchema}
+              onSubmit={(values, formikActions) => {
+                const data = {
+                  nama: dataParams?.name,
+                  email: dataParams?.email,
+                  phone: dataParams?.phone,
+                  address: values.address,
+                  province: form.province,
+                  city: form.city,
+                };
+
+                handleSubmit(data);
+                // setTimeout(() => {
+                //   formikActions.resetForm();
+                //   formikActions.setSubmitting(false);
+                // }, 5000);
+              }}>
+              {({
+                values,
+                errors,
+                touched,
+                isSubmitting,
+                handleChange,
+                handleBlur,
+                handleSubmit,
+              }) => {
+                const {address} = values;
+                return (
+                  <>
+                    <Input
+                      label={'Alamat'}
+                      type={'textarea'}
+                      value={address}
+                      onChangeText={handleChange('address')}
+                      error={touched.address && errors.address}
+                      onBlur={handleBlur('address')}
+                    />
+                    <Picker
+                      type="picker"
+                      label="Provinsi"
+                      width={'100%'}
+                      height={responsiveHeight(46)}
+                      fontSize={18}
+                      datas={dataProvince}
+                      onSelected={handlePickerProvince}
+                    />
+                    <Picker
+                      type="picker"
+                      label="Kabupaten"
+                      width={'100%'}
+                      height={responsiveHeight(46)}
+                      fontSize={18}
+                      datas={dataCity}
+                      onSelected={handlePickerCity}
+                    />
+                    <Gap height={30} />
+                    <Button
+                      text="Continue"
+                      icon={IC_NEXT_WHITE}
+                      submiting={isSubmitting}
+                      onPress={handleSubmit}
+                    />
+                  </>
+                );
+              }}
+            </Formik>
+            {/*  */}
           </View>
         </KeyboardAwareScrollView>
       </View>

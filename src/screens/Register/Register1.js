@@ -24,6 +24,7 @@ const Register1 = ({navigation}) => {
     password: '',
   };
 
+  // validation formik
   const validationSchema = Yup.object({
     name: Yup.string()
       .trim()
@@ -65,10 +66,10 @@ const Register1 = ({navigation}) => {
               validationSchema={validationSchema}
               onSubmit={(values, formikActions) => {
                 setTimeout(() => {
-                  console.tron.log('values', values);
+                  navigation.navigate('Register2', values);
                   formikActions.resetForm();
                   formikActions.setSubmitting(false);
-                }, 3000);
+                }, 2000);
               }}>
               {({
                 values,

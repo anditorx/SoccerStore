@@ -10,6 +10,7 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "@react-native-async-storage/async-storage": "^1.16.1",
     "@react-native-community/masked-view": "^0.1.11",
     "@react-native-picker/picker": "^2.2.1",
     "@react-navigation/bottom-tabs": "^5.x",
@@ -17,7 +18,7 @@
     "@react-navigation/stack": "^5.x",
     "@types/react-native": "^0.66.9",
     "axios": "^0.25.0",
-    "firebase": "^9.6.6",
+    "firebase": "^8.9.1",
     "formik": "^2.2.9",
     "lottie-ios": "3.2.3",
     "lottie-react-native": "^4.1.3",

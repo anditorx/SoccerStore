@@ -30,7 +30,13 @@ const Input = ({
           numberOfLines={4}
           value={value}
           onChangeText={onChangeText}
+          onBlur={onBlur}
         />
+        {error ? (
+          <Text style={{color: 'red', fontSize: 12, textAlign: 'right'}}>
+            {error}
+          </Text>
+        ) : null}
       </View>
     );
   }
