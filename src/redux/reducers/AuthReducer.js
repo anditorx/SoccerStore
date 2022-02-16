@@ -15,7 +15,7 @@ export default function (state = initialState, action) {
         ...state,
         loadingAuth: action.payload,
       };
-    // GET CITY
+    // REGISTER
     case ActionTypes.AUTH_REGISTER_REQUEST:
       return {
         ...state,
@@ -32,6 +32,31 @@ export default function (state = initialState, action) {
         dataUser: action.payload.dataUser,
       };
     case ActionTypes.AUTH_REGISTER_FAILED:
+      return {
+        ...state,
+        loadingAuth: false,
+        error: true,
+        successAuth: false,
+        dataUser: action.payload.dataUser,
+        errorMessage: action.payload.errorMessage,
+      };
+    // LOGIN
+    case ActionTypes.AUTH_LOGIN_REQUEST:
+      return {
+        ...state,
+        loadingAuth: true,
+        error: false,
+        successAuth: false,
+        errorMessage: false,
+      };
+    case ActionTypes.AUTH_LOGIN_SUCCESS:
+      return {
+        ...state,
+        loadingAuth: false,
+        successAuth: true,
+        dataUser: action.payload.dataUser,
+      };
+    case ActionTypes.AUTH_LOGIN_FAILED:
       return {
         ...state,
         loadingAuth: false,

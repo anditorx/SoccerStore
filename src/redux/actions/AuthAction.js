@@ -2,7 +2,7 @@ import * as ActionTypes from '../actionTypes.js';
 import {CONSTANT, SERVICES} from '../../constant';
 // firebase
 import FIREBASE from '../../config/FIREBASE';
-import {navigate, storeDataStorage} from '../../utils';
+import {navigate, replace, storeDataStorage} from '../../utils';
 
 export const registerUser = (data, password, navigation) => {
   return dispatch => {
@@ -36,7 +36,7 @@ export const registerUser = (data, password, navigation) => {
         // local storage
         storeDataStorage(CONSTANT.STORAGE_DATAUSER, newData);
         // navigation
-        navigation.navigate('MainApp');
+        navigation.reset({index: 0, routes: [{name: 'MainApp'}]});
       })
       .catch(error => {
         const errorCode = error.code;
@@ -44,6 +44,61 @@ export const registerUser = (data, password, navigation) => {
         // ..
         dispatch({
           type: ActionTypes.AUTH_REGISTER_FAILED,
+          payload: {
+            dataUser: false,
+            errorMessage: errorMessage,
+          },
+        });
+        alert(error);
+      });
+  };
+};
+
+export const loginUser = (data, navigation) => {
+  return dispatch => {
+    // Loading
+    dispatch({type: ActionTypes.AUTH_LOGIN_REQUEST});
+    //
+    FIREBASE.auth()
+      .signInWithEmailAndPassword(data?.email, data?.password)
+      .then(success => {
+        // read data once
+        FIREBASE.database()
+          .ref('/users/' + success.user.uid)
+          .once('value')
+          .then(resDB => {
+            // check response
+            if (resDB.val()) {
+              dispatch({
+                type: ActionTypes.AUTH_LOGIN_SUCCESS,
+                payload: {
+                  dataUser: resDB.val(),
+                },
+              });
+
+              // local storage
+              storeDataStorage(CONSTANT.STORAGE_DATAUSER, resDB.val());
+
+              // navigation
+              navigation.reset({index: 0, routes: [{name: 'MainApp'}]});
+            } else {
+              dispatch({
+                type: ActionTypes.AUTH_LOGIN_FAILED,
+                payload: {
+                  dataUser: [],
+                  errorMessage: 'Data not found',
+                },
+              });
+              alert('Data not found');
+            }
+          });
+      })
+      .catch(error => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // ..
+        dispatch({
+          type: ActionTypes.AUTH_LOGIN_FAILED,
           payload: {
             dataUser: false,
             errorMessage: errorMessage,

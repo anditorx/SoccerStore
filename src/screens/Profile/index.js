@@ -63,7 +63,7 @@ const Profile = ({navigation}) => {
       'Logout',
       'Are you sure to logout?',
       [
-        {text: 'Yes', onPress: () => handleSignOut()},
+        {text: 'Yes', onPress: handleSignOut},
         {
           text: 'No',
           style: 'cancel',
@@ -81,7 +81,7 @@ const Profile = ({navigation}) => {
       .signOut()
       .then(() => {
         clearStorage();
-        navigation.replace('Login');
+        navigation.reset({index: 0, routes: [{name: 'Login'}]});
         setLoading(false);
       })
       .catch(err => {
