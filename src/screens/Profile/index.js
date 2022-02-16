@@ -19,6 +19,7 @@ import {
   IC_Shirt,
   IC_Signout,
   IL_Avatar,
+  IL_NO_AVATAR,
 } from '../../res';
 import {Liga} from '../../res/dummies/liga';
 import {DummiesJersey} from '../../res/dummies/jersey';
@@ -27,28 +28,55 @@ import {
   responsiveWidth,
   windowHeight,
 } from '../../utils/responsive';
+import {getDataStorage} from '../../utils';
+import {CONSTANT} from '../../constant';
 
 const Profile = ({navigation}) => {
-  const [dataProfile, setDataProfile] = useState(DummiesProfile.Profile);
+  const [dataProfile, setDataProfile] = useState(false);
+  const [avatar, setAvatar] = useState(false);
+
+  useEffect(() => {
+    getDataUser();
+  }, [getDataUser]);
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const getDataUser = () => {
+    getDataStorage(CONSTANT.STORAGE_DATAUSER)
+      .then(res => {
+        const data = res;
+        if (data) {
+          setDataProfile(data);
+        } else {
+          navigation.replace('Login');
+        }
+      })
+      .catch(err => {
+        // error
+      });
+  };
 
   return (
     <>
       <SafeAreaView style={styles.safeArea} />
       <StatusBar barStyle="light-content" />
-      <ScrollView showsVerticalScrollIndicator={false} style={styles.screen}>
-        <View style={styles.content}>
-          <View style={styles.wrapperHead}>
-            <View style={styles.wrapperAvatar}>
+      <View style={styles.content}>
+        <View style={styles.wrapperHead}>
+          <View style={styles.wrapperAvatar}>
+            {avatar ? (
               <Image source={dataProfile.avatar} style={styles.image} />
-            </View>
-            <View style={styles.desc}>
-              <Text style={styles.textName}>{dataProfile.nama}</Text>
-              <Text style={styles.text}>No Hp. {dataProfile.nomerHp}</Text>
-              <Text style={styles.text}>
-                {dataProfile.alamat}, {dataProfile.kota}, {dataProfile.provinsi}
-              </Text>
-            </View>
+            ) : (
+              <Image source={IL_NO_AVATAR} style={styles.image} />
+            )}
           </View>
+          <View style={styles.desc}>
+            <Text style={styles.textName}>{dataProfile.nama}</Text>
+            <Text style={styles.text}>No Hp. {dataProfile.phone}</Text>
+            <Text style={styles.text}>
+              {dataProfile.address}, {dataProfile.city}, {dataProfile.province}
+            </Text>
+          </View>
+        </View>
+        <ScrollView showsVerticalScrollIndicator={false} style={styles.content}>
           <View style={styles.wrapperList}>
             <List
               type="list-profile"
@@ -71,8 +99,8 @@ const Profile = ({navigation}) => {
             <List type="list-profile" icon={<IC_Signout />} name="Keluar" />
             <Gap height={100} />
           </View>
-        </View>
-      </ScrollView>
+        </ScrollView>
+      </View>
     </>
   );
 };
@@ -88,7 +116,7 @@ const styles = StyleSheet.create({
   content: {
     flex: 1,
     backgroundColor: colors.white,
-    marginTop: responsiveHeight(windowHeight),
+    marginTop: -30,
     // height: responsiveHeight(windowHeight),
     borderTopRightRadius: 30,
     borderTopLeftRadius: 30,
@@ -109,22 +137,30 @@ const styles = StyleSheet.create({
   },
   wrapperHead: {
     alignItems: 'center',
+    backgroundColor: colors.primary,
+    paddingBottom: 50,
+    paddingTop: 25,
   },
   wrapperAvatar: {
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: responsiveHeight(windowHeight / 4 - 300),
   },
   desc: {
     paddingTop: 10,
     paddingHorizontal: 20,
   },
-  image: {height: 150, width: 150, borderRadius: 150 / 2},
-  textName: {textAlign: 'center', fontFamily: fonts.SemiBold, fontSize: 18},
+  image: {height: 100, width: 100, borderRadius: 100 / 2},
+  textName: {
+    textAlign: 'center',
+    fontFamily: fonts.SemiBold,
+    fontSize: 18,
+    color: colors.white,
+  },
   text: {
     textAlign: 'center',
     fontFamily: fonts.Regular,
     fontSize: 14,
+    color: colors.white,
   },
-  wrapperList: {paddingHorizontal: 20, marginVertical: 20},
+  wrapperList: {paddingHorizontal: 20, marginVertical: 35},
 });

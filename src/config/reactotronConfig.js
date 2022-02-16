@@ -2,7 +2,7 @@ import Reactotron from 'reactotron-react-native';
 
 const reactotron = Reactotron.configure({
   name: 'Soccer Store',
-  host: '192.168.1.5',
+  host: '192.168.1.8',
 }).useReactNative();
 
 if (reactotron) {

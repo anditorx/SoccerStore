@@ -7,6 +7,7 @@ import IL_LIGA_GERMANY from './il_liga_bundesliga.png';
 import IL_LIGA_SPANYOL from './il_liga_laliga.png';
 import IL_Avatar from './il_avatar.png';
 import IL_CAMERA from './il_camera_black.png';
+import IL_NO_AVATAR from './il_no_avatar.png';
 
 export {
   IL_PlayFootball,
@@ -18,4 +19,5 @@ export {
   IL_LIGA_SPANYOL,
   IL_Avatar,
   IL_CAMERA,
+  IL_NO_AVATAR,
 };

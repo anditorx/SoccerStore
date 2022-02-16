@@ -2,7 +2,7 @@ import * as ActionTypes from '../actionTypes.js';
 import {CONSTANT, SERVICES} from '../../constant';
 // firebase
 import FIREBASE from '../../config/FIREBASE';
-import {navigate, storeData} from '../../utils';
+import {navigate, storeDataStorage} from '../../utils';
 
 export const registerUser = (data, password, navigation) => {
   return dispatch => {
@@ -34,7 +34,7 @@ export const registerUser = (data, password, navigation) => {
         });
 
         // local storage
-        storeData('@storage_dataUser', newData);
+        storeDataStorage(CONSTANT.STORAGE_DATAUSER, newData);
         // navigation
         navigation.navigate('MainApp');
       })
