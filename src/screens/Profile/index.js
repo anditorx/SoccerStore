@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {
+  Alert,
   Image,
   SafeAreaView,
   ScrollView,
@@ -8,7 +9,7 @@ import {
   Text,
   View,
 } from 'react-native';
-import {BannerSlider, Gap, Header, List} from '../../components';
+import {BannerSlider, Gap, Header, List, Loading} from '../../components';
 import {
   colors,
   DummiesProfile,
@@ -28,12 +29,14 @@ import {
   responsiveWidth,
   windowHeight,
 } from '../../utils/responsive';
-import {getDataStorage} from '../../utils';
+import {clearStorage, getDataStorage} from '../../utils';
 import {CONSTANT} from '../../constant';
+import FIREBASE from '../../config/FIREBASE';
 
 const Profile = ({navigation}) => {
   const [dataProfile, setDataProfile] = useState(false);
   const [avatar, setAvatar] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     getDataUser();
@@ -55,11 +58,43 @@ const Profile = ({navigation}) => {
       });
   };
 
+  const modalSignOut = () => {
+    Alert.alert(
+      'Logout',
+      'Are you sure to logout?',
+      [
+        {text: 'Yes', onPress: () => handleSignOut()},
+        {
+          text: 'No',
+          style: 'cancel',
+        },
+      ],
+      {
+        cancelable: true,
+      },
+    );
+  };
+
+  const handleSignOut = () => {
+    setLoading(true);
+    FIREBASE.auth()
+      .signOut()
+      .then(() => {
+        clearStorage();
+        navigation.replace('Login');
+        setLoading(false);
+      })
+      .catch(err => {
+        // an error happened
+      });
+  };
+
   return (
     <>
       <SafeAreaView style={styles.safeArea} />
       <StatusBar barStyle="light-content" />
       <View style={styles.content}>
+        {loading && <Loading />}
         <View style={styles.wrapperHead}>
           <View style={styles.wrapperAvatar}>
             {avatar ? (
@@ -96,7 +131,12 @@ const Profile = ({navigation}) => {
               name="Riwayat Pemesanan"
               onPress={() => navigation.navigate('HistoryOrder')}
             />
-            <List type="list-profile" icon={<IC_Signout />} name="Keluar" />
+            <List
+              type="list-profile"
+              icon={<IC_Signout />}
+              name="Keluar"
+              onPress={() => modalSignOut()}
+            />
             <Gap height={100} />
           </View>
         </ScrollView>
