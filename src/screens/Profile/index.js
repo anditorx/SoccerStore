@@ -47,8 +47,12 @@ const Profile = ({navigation}) => {
     getDataStorage(CONSTANT.STORAGE_DATAUSER)
       .then(res => {
         const data = res;
+        console.tron.log('data', data);
         if (data) {
           setDataProfile(data);
+          if (data?.avatar) {
+            setAvatar({uri: data?.avatar});
+          }
         } else {
           navigation.replace('Login');
         }
@@ -98,7 +102,7 @@ const Profile = ({navigation}) => {
         <View style={styles.wrapperHead}>
           <View style={styles.wrapperAvatar}>
             {avatar ? (
-              <Image source={dataProfile.avatar} style={styles.image} />
+              <Image source={avatar} style={styles.image} />
             ) : (
               <Image source={IL_NO_AVATAR} style={styles.image} />
             )}

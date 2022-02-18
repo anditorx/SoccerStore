@@ -15,6 +15,7 @@ const Input = ({
   onChangeText,
   error,
   onBlur,
+  keyboardType,
 }) => {
   const [selectedValue, setSelectedValue] = useState('');
   const [data, setData] = useState(null);
@@ -50,6 +51,7 @@ const Input = ({
         value={value}
         secureTextEntry={password ? true : false}
         onChangeText={onChangeText}
+        keyboardType={keyboardType}
       />
       {error ? (
         <Text style={{color: 'red', fontSize: 12, textAlign: 'right'}}>

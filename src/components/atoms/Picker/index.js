@@ -11,9 +11,12 @@ const Picker = ({
   height,
   width,
   onSelected,
+  value,
 }) => {
   const [sizeJersey, setSizeJersey] = useState(null);
-  const [textInputValue, setTextInputValue] = useState('');
+  const [textInputValue, setTextInputValue] = useState(
+    value !== '' ? value : '',
+  );
 
   const _renderModal = () => {
     const data = [];

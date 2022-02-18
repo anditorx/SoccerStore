@@ -7,9 +7,10 @@ import {
   View,
   ScrollView,
 } from 'react-native';
-import {colors, fonts, IC_NEXT_WHITE, IC_REGIS_1} from '../../res';
 import {responsiveHeight, useForm} from '../../utils';
 import {Button, Gap, HeaderRegister, Input} from '../../components';
+import {colors, fonts, IC_NEXT_WHITE, IC_REGIS_1} from '../../res';
+// lib
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {Formik} from 'formik';
 import * as Yup from 'yup';
