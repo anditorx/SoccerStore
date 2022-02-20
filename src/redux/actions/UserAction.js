@@ -28,19 +28,16 @@ export const updateProfile = (data, navigation) => {
       status: 'user',
       avatar: data.avatarUpdated ? data.avatarForDB : data?.avatar,
     };
-    console.tron.log('newData', newData);
     // save to realtime database
     FIREBASE.database()
       .ref('users/' + newData.uid)
       .update(newData)
       .then(() => {
-        // console.tron.log('response updateProfile', response);
         // read data once
         FIREBASE.database()
           .ref('/users/' + newData.uid)
           .once('value')
           .then(resDB => {
-            console.tron.log('resDB', resDB.val());
             // check response
             if (resDB.val()) {
               dispatch({
@@ -66,23 +63,11 @@ export const updateProfile = (data, navigation) => {
               alert('Data not found');
             }
           });
-
-        // dispatch({
-        //   type: ActionTypes.UPDATE_PROFILE_SUCCESS,
-        //   payload: {
-        //     dataUser: response ? response : [],
-        //   },
-        // });
-        // local storage
-        // storeDataStorage(CONSTANT.STORAGE_DATAUSER, newData);
-        // navigation
-        // navigation.replace('Profile');
       })
       .catch(error => {
         const errorCode = error.code;
         const errorMessage = error.message;
         // ..
-        console.tron.log('error updateProfile', error);
         // dispatch({
         //   type: ActionTypes.UPDATE_PROFILE_FAILED,
         //   payload: {

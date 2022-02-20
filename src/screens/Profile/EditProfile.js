@@ -40,10 +40,11 @@ const actionSheetRef = createRef();
 const EditProfile = ({navigation, route}) => {
   const [dataProfile, setDataProfile] = useState(route?.params);
   const dispatch = useDispatch();
-  const [avatar, setAvatar] = useState('');
+  const [avatar, setAvatar] = useState(
+    dataProfile.avatar ? {uri: dataProfile.avatar} : '',
+  );
   const [avatarUpdated, setAvatarUpdated] = useState(false);
   const [avatarForDB, setAvatarForDB] = useState('');
-  console.tron.log('dataProfile', dataProfile);
 
   const {loading, dataProvince, dataCity} = useSelector(
     state => state.RajaOngkirReducer,
@@ -101,18 +102,13 @@ const EditProfile = ({navigation, route}) => {
     };
 
     launchImageLibrary(options, response => {
-      console.tron.log('response getImage', response);
       if (response.didCancel || response.error) {
         Alert.alert('Error', 'User cancelled image picker or error');
       } else {
         const source = {uri: response.assets[0].uri};
         // You can also display the image using data:
         // const source = { uri: 'data:image/jpeg;base64,' + response.data };
-        const dataImage = {
-          uri: response.assets[0].uri,
-          type: response.assets[0].type,
-          name: response.assets[0].fileName,
-        };
+
         const fileString = `data:${response.assets[0].type};base64,${response.assets[0].base64}`;
         setAvatar(source);
         setAvatarUpdated(true);
@@ -151,8 +147,8 @@ const EditProfile = ({navigation, route}) => {
               city: form.city,
               avatarUpdated: avatarUpdated,
               avatarForDB: avatarForDB,
+              avatar: avatar.uri ? avatar?.uri : avatar,
             };
-            console.tron.log('data update', data);
 
             _handleSubmit(data);
           }}>
@@ -226,6 +222,7 @@ const EditProfile = ({navigation, route}) => {
                     label={'Alamat'}
                     type={'textarea'}
                     value={address}
+                    fontSize={14}
                     onChangeText={handleChange('address')}
                     error={touched.address && errors.address}
                     onBlur={handleBlur('address')}
@@ -255,7 +252,7 @@ const EditProfile = ({navigation, route}) => {
                     text="Simpan"
                     icon={IC_NEXT_WHITE}
                     fontSize={18}
-                    // submiting={isSubmitting}
+                    submiting={isSubmitting}
                     onPress={handleSubmit}
                   />
                   <Gap height={50} />
