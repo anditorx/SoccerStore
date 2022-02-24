@@ -8,21 +8,24 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {BannerSlider, Gap, Header, List} from '../../components';
+import {BannerSlider, Gap, Header, List, Loading} from '../../components';
 import {colors, fonts} from '../../res';
 import {Liga} from '../../res/dummies/liga';
 import {DummiesJersey} from '../../res/dummies/jersey';
 import {windowHeight, windowWidth} from '../../utils';
 // redux
 import {connect, useDispatch, useSelector} from 'react-redux';
-import {getUser} from '../../redux/actions';
+import {doGetListLiga, getUser} from '../../redux/actions';
 
 const Home = ({navigation}) => {
   const dispatch = useDispatch();
   const {dataUser} = useSelector(state => state.UserReducer);
-
+  const {dataLiga, loadingLiga, successLiga, errorMessageLiga} = useSelector(
+    state => state.LigaReducer,
+  );
   useEffect(() => {
     dispatch(getUser());
+    dispatch(doGetListLiga());
   }, [dispatch]);
 
   return (
@@ -37,7 +40,7 @@ const Home = ({navigation}) => {
         <View style={styles.content}>
           <View style={styles.wrapperLiga}>
             <Text style={styles.titleLiga}>Pilih Liga</Text>
-            <List type="liga" data={Liga} />
+            <List type="liga" />
           </View>
           <View style={styles.wrapperJersey}>
             <View style={styles.wrapperJerseyHeaad}>
@@ -50,6 +53,7 @@ const Home = ({navigation}) => {
           </View>
           <Gap height={100} />
         </View>
+        {loadingLiga && <Loading />}
       </ScrollView>
     </>
   );

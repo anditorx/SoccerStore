@@ -7,12 +7,19 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {CardHistoryOrder, CardLiga, CardShoppingCart, Gap} from '../..';
+import {useSelector} from 'react-redux';
+import {Loading} from '..';
+import {CardHistoryOrder, CardLiga, CardShoppingCart} from '../..';
 import {colors, fonts, IC_ArrowRight, IC_EditProfile} from '../../../res';
 import {numberWithCommas} from '../../../utils';
 import {responsiveHeight, responsiveWidth} from '../../../utils/responsive';
 
 const index = ({type, data, name, icon, onPress, navigation}) => {
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const {dataLiga, loadingLiga, successLiga, errorMessageLiga} = useSelector(
+    state => state.LigaReducer,
+  );
+
   if (type === 'cart-list') {
     return (
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -27,9 +34,17 @@ const index = ({type, data, name, icon, onPress, navigation}) => {
   if (type === 'liga') {
     return (
       <View style={styles.containerLiga}>
-        {data.map((item, index) => {
-          return <CardLiga data={item} key={index} />;
-        })}
+        {dataLiga ? (
+          Object.keys(dataLiga).map((item, index) => {
+            return <CardLiga dataLiga={dataLiga[item]} key={index} />;
+          })
+        ) : dataLiga ? (
+          <Loading />
+        ) : (
+          <View>
+            <Text>Tidak ada</Text>
+          </View>
+        )}
       </View>
     );
   }

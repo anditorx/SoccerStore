@@ -1,6 +1,12 @@
 import FIREBASE from '../../config/FIREBASE/index.js';
 import {CONSTANT} from '../../constant/index.js';
-import {storeDataStorage} from '../../utils/index.js';
+import {
+  storeDataStorage,
+  dispatchLoading,
+  dispatchRequest,
+  dispatchSuccess,
+  dispatchFailed,
+} from '../../utils/index.js';
 import * as ActionTypes from '../actionTypes.js';
 
 export const getUser = () => {
@@ -16,7 +22,8 @@ export const getUser = () => {
 };
 export const updateProfile = (data, navigation) => {
   return dispatch => {
-    dispatch({type: ActionTypes.UPDATE_PROFILE_REQUEST});
+    // dispatch({type: ActionTypes.UPDATE_PROFILE_REQUEST});
+    dispatchRequest(dispatch, ActionTypes.UPDATE_PROFILE_REQUEST);
     const newData = {
       uid: data?.uid,
       nama: data?.nama,
@@ -68,13 +75,13 @@ export const updateProfile = (data, navigation) => {
         const errorCode = error.code;
         const errorMessage = error.message;
         // ..
-        // dispatch({
-        //   type: ActionTypes.UPDATE_PROFILE_FAILED,
-        //   payload: {
-        //     dataUser: false,
-        //     errorMessage: errorMessage,
-        //   },
-        // });
+        dispatch({
+          type: ActionTypes.UPDATE_PROFILE_FAILED,
+          payload: {
+            dataUser: [],
+            errorMessage: 'Data not found',
+          },
+        });
         alert(error);
       });
   };

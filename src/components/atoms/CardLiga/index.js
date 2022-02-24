@@ -3,10 +3,10 @@ import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {colors} from '../../../res';
 import {responsiveHeight, responsiveWidth} from '../../../utils/responsive';
 
-const CardLiga = ({data}) => {
+const CardLiga = data => {
   return (
     <TouchableOpacity style={styles.wrapperImgLiga}>
-      <Image source={data.image} style={styles.imgLiga} />
+      <Image source={{uri: data.dataLiga.image}} style={styles.imgLiga} />
     </TouchableOpacity>
   );
 };
