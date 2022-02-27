@@ -15,11 +15,11 @@ export function pop() {
   rootNavigation.current?.dispatch(StackActions.pop());
 }
 
-export function reset() {
+export function reset({routeName}) {
   rootNavigation.current?.dispatch(
     CommonActions.reset({
       index: 0,
-      routes: [{name: 'BottomNavigation'}],
+      routes: [{name: routeName}],
     }),
   );
 }

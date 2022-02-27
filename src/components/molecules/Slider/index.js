@@ -9,7 +9,6 @@ const Slider = ({image}) => {
   const [openImg, setOpenImg] = useState(false);
   const [previewImg, setPreviewImg] = useState(false);
   const _clickedPreview = index => {
-    // console.warn(`image ${index} pressed`);
     setOpenImg(true);
     setPreviewImg([
       {

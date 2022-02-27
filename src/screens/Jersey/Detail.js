@@ -21,7 +21,6 @@ import {
   Button,
 } from '../../components';
 import {colors, fonts, IC_ArrowLeft, IC_ShoppingCartWhite} from '../../res';
-import {Liga} from '../../res/dummies/liga';
 import {
   responsiveHeight,
   responsiveWidth,
@@ -29,14 +28,15 @@ import {
 } from '../../utils/responsive';
 import {numberWithCommas} from '../../utils';
 import {RFValue} from 'react-native-responsive-fontsize';
-import {DummiesJersey} from '../../res/dummies/jersey';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import ActionSheet from 'react-native-actions-sheet';
+import {useSelector} from 'react-redux';
 
 const actionSheetRef = createRef();
 const JerseyDetail = ({route, navigation}) => {
   const dataParam = route.params;
-  let actionSheet;
+  const {dataLiga, loadingLiga, successLiga, errorMessageLiga} = useSelector(
+    state => state.LigaReducer,
+  );
   return (
     <>
       <SafeAreaView style={styles.safeArea} />
@@ -48,10 +48,15 @@ const JerseyDetail = ({route, navigation}) => {
             icon={<IC_ArrowLeft />}
             onPress={() => navigation.goBack()}
           />
-          <Slider image={dataParam.image} />
+          <Slider image={dataParam.gambar} />
           <View style={styles.content}>
             <View style={styles.wrapperLiga}>
-              <CardLiga data={dataParam.liga} />
+              {/* <CardLiga data={dataParam.liga} /> */}
+              <CardLiga
+                key={dataParam.liga}
+                dataLiga={dataLiga[dataParam.liga]}
+                id={dataParam.liga}
+              />
             </View>
             <View style={styles.desc}>
               <Text style={styles.name}>{dataParam.name}</Text>

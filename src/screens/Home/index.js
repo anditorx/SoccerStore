@@ -15,18 +15,24 @@ import {DummiesJersey} from '../../res/dummies/jersey';
 import {windowHeight, windowWidth} from '../../utils';
 // redux
 import {connect, useDispatch, useSelector} from 'react-redux';
-import {doGetListLiga, getUser} from '../../redux/actions';
+import {doGetListJersey, doGetListLiga, getUser} from '../../redux/actions';
+
+import {useIsFocused} from '@react-navigation/native';
 
 const Home = ({navigation}) => {
+  const isFocused = useIsFocused();
   const dispatch = useDispatch();
   const {dataUser} = useSelector(state => state.UserReducer);
-  const {dataLiga, loadingLiga, successLiga, errorMessageLiga} = useSelector(
-    state => state.LigaReducer,
-  );
+  const {loadingJersey} = useSelector(state => state.JerseyReducer);
   useEffect(() => {
     dispatch(getUser());
     dispatch(doGetListLiga());
+    dispatch(doGetListJersey());
   }, [dispatch]);
+
+  useEffect(() => {
+    isFocused && dispatch(doGetListJersey());
+  }, [dispatch, isFocused]);
 
   return (
     <>
@@ -40,7 +46,7 @@ const Home = ({navigation}) => {
         <View style={styles.content}>
           <View style={styles.wrapperLiga}>
             <Text style={styles.titleLiga}>Pilih Liga</Text>
-            <List type="liga" />
+            <List type="liga" navigation={navigation} />
           </View>
           <View style={styles.wrapperJersey}>
             <View style={styles.wrapperJerseyHeaad}>
@@ -49,12 +55,16 @@ const Home = ({navigation}) => {
                 <Text style={styles.textSeeAll}>Lihat Semua</Text>
               </TouchableOpacity>
             </View>
-            <List type="jersey" data={DummiesJersey} navigation={navigation} />
+            <List type="jersey-home" navigation={navigation} />
           </View>
           <Gap height={100} />
         </View>
-        {loadingLiga && <Loading />}
       </ScrollView>
+      {loadingJersey && (
+        <View style={{position: 'absolute', marginTop: 50}}>
+          <Loading />
+        </View>
+      )}
     </>
   );
 };

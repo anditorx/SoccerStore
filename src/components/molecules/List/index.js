@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/rules-of-hooks */
+import {useNavigation} from '@react-navigation/native';
 import React from 'react';
 import {
   Image,
@@ -14,12 +16,14 @@ import {colors, fonts, IC_ArrowRight, IC_EditProfile} from '../../../res';
 import {numberWithCommas} from '../../../utils';
 import {responsiveHeight, responsiveWidth} from '../../../utils/responsive';
 
-const index = ({type, data, name, icon, onPress, navigation}) => {
+const index = ({type, data, name, icon, onPress}) => {
+  const navigation = useNavigation();
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const {dataLiga, loadingLiga, successLiga, errorMessageLiga} = useSelector(
     state => state.LigaReducer,
   );
-
+  const {dataJersey, loadingJersey, successJersey, errorMessageJersey} =
+    useSelector(state => state.JerseyReducer);
   if (type === 'cart-list') {
     return (
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -35,11 +39,42 @@ const index = ({type, data, name, icon, onPress, navigation}) => {
     return (
       <View style={styles.containerLiga}>
         {dataLiga ? (
-          Object.keys(dataLiga).map((item, index) => {
-            return <CardLiga dataLiga={dataLiga[item]} key={index} />;
+          Object.keys(dataLiga).map(key => {
+            return (
+              <>
+                <CardLiga key={key} dataLiga={dataLiga[key]} id={key} />
+              </>
+            );
           })
-        ) : dataLiga ? (
-          <Loading />
+        ) : (
+          <View>
+            <Text>Tidak ada</Text>
+          </View>
+        )}
+      </View>
+    );
+  }
+  if (type === 'jersey-home') {
+    return (
+      <View style={styles.containerJersey}>
+        {dataJersey ? (
+          Object.values(dataJersey)
+            .slice(0, 6)
+            .map((item, index) => {
+              return (
+                <TouchableOpacity
+                  key={index}
+                  style={styles.wrapperImgJersey}
+                  onPress={() => navigation.navigate('JerseyDetail', item)}>
+                  <Image
+                    source={{uri: item.gambar[0]}}
+                    style={styles.imgJersey}
+                  />
+                  <Text style={styles.titleJersey}>{item.nama}</Text>
+                  {/* <Text style={styles.titleJersey}>{item.nama}</Text> */}
+                </TouchableOpacity>
+              );
+            })
         ) : (
           <View>
             <Text>Tidak ada</Text>
@@ -51,17 +86,27 @@ const index = ({type, data, name, icon, onPress, navigation}) => {
   if (type === 'jersey') {
     return (
       <View style={styles.containerJersey}>
-        {data.map((item, index) => {
-          return (
-            <TouchableOpacity
-              key={index}
-              style={styles.wrapperImgJersey}
-              onPress={() => navigation.navigate('JerseyDetail', item)}>
-              <Image source={item.image[0]} style={styles.imgJersey} />
-              <Text style={styles.titleJersey}>{item.name}</Text>
-            </TouchableOpacity>
-          );
-        })}
+        {dataJersey ? (
+          Object.values(dataJersey).map((item, index) => {
+            return (
+              <TouchableOpacity
+                key={index}
+                style={styles.wrapperImgJersey}
+                onPress={() => navigation.navigate('JerseyDetail', item)}>
+                <Image
+                  source={{uri: item.gambar[0]}}
+                  style={styles.imgJersey}
+                />
+                <Text style={styles.titleJersey}>{item.nama}</Text>
+                {/* <Text style={styles.titleJersey}>{item.nama}</Text> */}
+              </TouchableOpacity>
+            );
+          })
+        ) : (
+          <View>
+            <Text>Tidak ada</Text>
+          </View>
+        )}
       </View>
     );
   }

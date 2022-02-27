@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -7,13 +7,32 @@ import {
   Text,
   View,
 } from 'react-native';
-import {BannerSlider, Gap, Header, List} from '../../components';
+import {BannerSlider, Gap, Header, List, Loading} from '../../components';
 import {colors, fonts} from '../../res';
 import {Liga} from '../../res/dummies/liga';
 import {DummiesJersey} from '../../res/dummies/jersey';
 import {windowHeight} from '../../utils/responsive';
+import {doGetListJersey} from '../../redux/actions';
+import {useDispatch, useSelector} from 'react-redux';
+import {useIsFocused} from '@react-navigation/native';
 
 const Jersey = ({navigation}) => {
+  const dispatch = useDispatch();
+  const isFocused = useIsFocused();
+  const {loadingJersey, idLiga, namaLiga} = useSelector(
+    state => state.JerseyReducer,
+  );
+  console.tron.log('🚀 ~ idLiga :=>', idLiga);
+  console.tron.log('🚀 ~ namaLiga :=>', namaLiga);
+
+  useEffect(() => {
+    isFocused && dispatch(doGetListJersey());
+  }, [dispatch, isFocused]);
+
+  useEffect(() => {
+    dispatch(doGetListJersey(idLiga));
+  }, [dispatch, idLiga]);
+
   return (
     <>
       <SafeAreaView style={styles.safeAreaTop} />
@@ -24,16 +43,24 @@ const Jersey = ({navigation}) => {
         <Header />
         <View style={styles.content}>
           <View style={styles.wrapperLiga}>
-            <Text style={styles.titleLiga}>Pilih Liga</Text>
-            <List type="liga" data={Liga} />
+            <List type="liga" />
           </View>
           <View style={styles.wrapperJersey}>
-            <Text style={styles.titleJersey}>Pilih Jersey</Text>
-            <List type="jersey" data={DummiesJersey} navigation={navigation} />
+            <Text style={styles.titleJersey}>
+              Pilih
+              <Text style={styles.txtBold}> Jersey </Text>
+              {/* {namaLiga ? namaLiga : 'Yang Anda Inginkan'} */}
+            </Text>
+            <List type="jersey" navigation={navigation} />
           </View>
           <Gap height={100} />
         </View>
       </ScrollView>
+      {loadingJersey && (
+        <View style={{position: 'absolute', marginTop: 50}}>
+          <Loading />
+        </View>
+      )}
     </>
   );
 };
@@ -48,7 +75,7 @@ const styles = StyleSheet.create({
   },
   content: {flex: 1, backgroundColor: colors.transparent},
   wrapperLiga: {
-    padding: 20,
+    paddingHorizontal: 20,
   },
   titleLiga: {
     fontSize: 18,
@@ -62,4 +89,5 @@ const styles = StyleSheet.create({
     fontFamily: fonts.Regular,
   },
   scrollView: {backgroundColor: colors.white},
+  txtBold: {fontWeight: 'bold'},
 });
