@@ -19,13 +19,15 @@ import {useIsFocused} from '@react-navigation/native';
 const Jersey = ({navigation, route}) => {
   const dispatch = useDispatch();
   const isFocused = useIsFocused();
-  const {loadingJersey, idLiga, namaLiga} = useSelector(
+  const {loadingJersey, idLiga, namaLiga, keyword} = useSelector(
     state => state.JerseyReducer,
   );
 
   useEffect(() => {
-    idLiga ? dispatch(doGetListJersey(idLiga)) : dispatch(doGetListJersey());
-  }, [dispatch, idLiga]);
+    idLiga || keyword
+      ? dispatch(doGetListJersey(idLiga, keyword))
+      : dispatch(doGetListJersey());
+  }, [dispatch, idLiga, keyword]);
 
   return (
     <>
@@ -34,17 +36,24 @@ const Jersey = ({navigation, route}) => {
       <ScrollView
         showsVerticalScrollIndicator={false}
         style={styles.scrollView}>
-        <Header />
+        <Header page={'JERSEY'} />
         <View style={styles.content}>
           <View style={styles.wrapperLiga}>
             <List type="liga" />
           </View>
           <View style={styles.wrapperJersey}>
-            <Text style={styles.titleJersey}>
-              Pilih
-              <Text style={styles.txtBold}> Jersey </Text>
-              {idLiga ? namaLiga : 'Yang Anda Inginkan'}
-            </Text>
+            {keyword ? (
+              <Text style={styles.titleJersey}>
+                Cari :<Text style={styles.txtBold}> {keyword}</Text>
+              </Text>
+            ) : (
+              <Text style={styles.titleJersey}>
+                Pilih
+                <Text style={styles.txtBold}> Jersey </Text>
+                {idLiga ? namaLiga : 'Yang Anda Inginkan'}
+              </Text>
+            )}
+
             <List type="jersey" navigation={navigation} />
           </View>
           <Gap height={100} />

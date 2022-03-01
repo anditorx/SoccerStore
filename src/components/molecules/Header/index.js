@@ -1,5 +1,5 @@
 import {NavigationContainer, useNavigation} from '@react-navigation/native';
-import React from 'react';
+import React, {useState} from 'react';
 import {
   StyleSheet,
   Text,
@@ -8,8 +8,10 @@ import {
   TextInput,
   TouchableOpacity,
 } from 'react-native';
+import {useDispatch} from 'react-redux';
 import {ShoppingCart} from '..';
 import {Gap} from '../..';
+import {doSaveKeywordJersey} from '../../../redux/actions';
 import {
   colors,
   fonts,
@@ -19,8 +21,11 @@ import {
 } from '../../../res';
 import {responsiveHeight, windowWidth} from '../../../utils/responsive';
 
-const Header = ({type, icon, onPress, text}) => {
+const Header = ({type, icon, onPress, text, page}) => {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
+  const [search, setSearch] = useState('');
+
   if (type === 'back-and-title') {
     return (
       <View style={styles.containerBackAndTitle}>
@@ -41,12 +46,27 @@ const Header = ({type, icon, onPress, text}) => {
       </View>
     );
   }
+
+  const handleSearch = () => {
+    dispatch(doSaveKeywordJersey(search));
+    if (page !== 'Jersey') {
+      navigation.navigate('Jersey');
+    }
+    setSearch('');
+  };
+
   return (
     <View style={styles.containerPrimary}>
       <View style={styles.wrapper}>
         <View style={styles.sectionSearch}>
           <IC_Search />
-          <TextInput placeholder="Cari Jersey . . . " style={styles.input} />
+          <TextInput
+            placeholder="Cari Jersey . . . "
+            style={styles.input}
+            value={search}
+            onChangeText={text => setSearch(text)}
+            onSubmitEditing={() => handleSearch()}
+          />
         </View>
         <Gap width={20} />
         <View style={styles.sectionCart}>

@@ -9,7 +9,7 @@ import {
 } from '../../utils';
 import * as ActionTypes from '../actionTypes.js';
 
-export const doGetListJersey = idLiga => {
+export const doGetListJersey = (idLiga, keyword) => {
   return dispatch => {
     dispatchRequest(dispatch, ActionTypes.GET_JERSEY_REQUEST);
     // check data from db
@@ -18,6 +18,21 @@ export const doGetListJersey = idLiga => {
         .ref('jerseys')
         .orderByChild('liga')
         .equalTo(idLiga)
+        .once('value', querySnapshot => {
+          //
+          let data = querySnapshot.val() ? querySnapshot.val() : [];
+          dispatchSuccess(dispatch, ActionTypes.GET_JERSEY_SUCCESS, data);
+        })
+        .catch(err => {
+          // error
+          dispatchFailed(dispatch, ActionTypes.GET_JERSEY_FAILED, err);
+        });
+    } else if (keyword) {
+      // search
+      FIREBASE.database()
+        .ref('jerseys')
+        .orderByChild('klub')
+        .equalTo(keyword.toUpperCase())
         .once('value', querySnapshot => {
           //
           let data = querySnapshot.val() ? querySnapshot.val() : [];
@@ -71,4 +86,11 @@ export const doGetJerseyByLiga = (id, namaLiga) => ({
 
 export const doDeleteStateJerseyByLiga = () => ({
   type: ActionTypes.DELETE_STATE_JERSEY_BY_LIGA,
+});
+
+export const doSaveKeywordJersey = search => ({
+  type: ActionTypes.SAVE_KEYWORD_JERSEY,
+  payload: {
+    data: search,
+  },
 });

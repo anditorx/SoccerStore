@@ -41,7 +41,7 @@ const Home = ({navigation}) => {
       <ScrollView
         showsVerticalScrollIndicator={false}
         style={{backgroundColor: 'white'}}>
-        <Header />
+        <Header page={'HOME'} navigation={navigation} />
         <BannerSlider />
         <View style={styles.content}>
           <View style={styles.wrapperLiga}>

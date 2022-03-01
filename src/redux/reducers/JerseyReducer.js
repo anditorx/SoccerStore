@@ -9,6 +9,7 @@ const initialState = {
 
   idLiga: false,
   namaLiga: false,
+  keyword: false,
 };
 
 export default function (state = initialState, action) {
@@ -53,6 +54,12 @@ export default function (state = initialState, action) {
         loadingJersey: false,
         idLiga: false,
         namaLiga: false,
+        keyword: false,
+      };
+    case ActionTypes.SAVE_KEYWORD_JERSEY:
+      return {
+        ...state,
+        keyword: action.payload.data,
       };
     default:
       return state;
