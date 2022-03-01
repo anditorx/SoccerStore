@@ -16,21 +16,15 @@ import {doGetListJersey} from '../../redux/actions';
 import {useDispatch, useSelector} from 'react-redux';
 import {useIsFocused} from '@react-navigation/native';
 
-const Jersey = ({navigation}) => {
+const Jersey = ({navigation, route}) => {
   const dispatch = useDispatch();
   const isFocused = useIsFocused();
   const {loadingJersey, idLiga, namaLiga} = useSelector(
     state => state.JerseyReducer,
   );
-  console.tron.log('🚀 ~ idLiga :=>', idLiga);
-  console.tron.log('🚀 ~ namaLiga :=>', namaLiga);
 
   useEffect(() => {
-    isFocused && dispatch(doGetListJersey());
-  }, [dispatch, isFocused]);
-
-  useEffect(() => {
-    dispatch(doGetListJersey(idLiga));
+    idLiga ? dispatch(doGetListJersey(idLiga)) : dispatch(doGetListJersey());
   }, [dispatch, idLiga]);
 
   return (
@@ -49,7 +43,7 @@ const Jersey = ({navigation}) => {
             <Text style={styles.titleJersey}>
               Pilih
               <Text style={styles.txtBold}> Jersey </Text>
-              {/* {namaLiga ? namaLiga : 'Yang Anda Inginkan'} */}
+              {idLiga ? namaLiga : 'Yang Anda Inginkan'}
             </Text>
             <List type="jersey" navigation={navigation} />
           </View>

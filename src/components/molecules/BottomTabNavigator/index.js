@@ -1,11 +1,13 @@
 import React from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {useDispatch} from 'react-redux';
 import {TabItemBottomNavigator} from '..';
+import {doDeleteStateJerseyByLiga} from '../../../redux/actions';
 import {colors} from '../../../res';
 
 const BottomTabNavigator = ({state, descriptors, navigation}) => {
   const focusedOptions = descriptors[state.routes[state.index].key].options;
-
+  const dispatch = useDispatch();
   if (focusedOptions.tabBarVisible === false) {
     return null;
   }
@@ -32,6 +34,9 @@ const BottomTabNavigator = ({state, descriptors, navigation}) => {
 
           if (!isFocused && !event.defaultPrevented) {
             navigation.navigate(route.name);
+          }
+          if (route.name !== 'Jersey') {
+            dispatch(doDeleteStateJerseyByLiga());
           }
         };
 

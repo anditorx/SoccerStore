@@ -10,7 +10,6 @@ import {
 import * as ActionTypes from '../actionTypes.js';
 
 export const doGetListJersey = idLiga => {
-  console.tron.log('🚀 ~ idLiga doGetListJersey :=>', idLiga);
   return dispatch => {
     dispatchRequest(dispatch, ActionTypes.GET_JERSEY_REQUEST);
     // check data from db
@@ -61,10 +60,15 @@ export const doGetListJerseyWithLimit = () => {
       });
   };
 };
+
 export const doGetJerseyByLiga = (id, namaLiga) => ({
   type: ActionTypes.GET_JERSEY_BY_LIGA,
   payload: {
     idLiga: id,
     namaLiga: namaLiga,
   },
+});
+
+export const doDeleteStateJerseyByLiga = () => ({
+  type: ActionTypes.DELETE_STATE_JERSEY_BY_LIGA,
 });

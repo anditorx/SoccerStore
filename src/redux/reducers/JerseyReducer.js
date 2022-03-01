@@ -47,6 +47,13 @@ export default function (state = initialState, action) {
         idLiga: action.payload.idLiga,
         namaLiga: action.payload.namaLiga,
       };
+    case ActionTypes.DELETE_STATE_JERSEY_BY_LIGA:
+      return {
+        ...state,
+        loadingJersey: false,
+        idLiga: false,
+        namaLiga: false,
+      };
     default:
       return state;
   }

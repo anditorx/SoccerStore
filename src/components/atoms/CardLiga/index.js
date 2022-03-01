@@ -10,6 +10,7 @@ import {useNavigation} from '@react-navigation/native';
 const CardLiga = ({dataLiga, id}) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
+
   const toJerseyByLiga = (id, namaLiga) => {
     dispatch(doGetJerseyByLiga(id, namaLiga));
     navigation.navigate('Jersey');
