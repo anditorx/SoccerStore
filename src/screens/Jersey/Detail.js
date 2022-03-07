@@ -1,4 +1,4 @@
-import React, {createRef} from 'react';
+import React, {createRef, useEffect, useState} from 'react';
 import {
   Image,
   SafeAreaView,
@@ -19,6 +19,7 @@ import {
   Input,
   Picker,
   Button,
+  Loading,
 } from '../../components';
 import {colors, fonts, IC_ArrowLeft, IC_ShoppingCartWhite} from '../../res';
 import {
@@ -34,9 +35,16 @@ import {useSelector} from 'react-redux';
 const actionSheetRef = createRef();
 const JerseyDetail = ({route, navigation}) => {
   const dataParam = route.params;
+  console.tron.log('🚀 ~ dataParam :=>', dataParam);
   const {dataLiga, loadingLiga, successLiga, errorMessageLiga} = useSelector(
     state => state.LigaReducer,
   );
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 5000);
+  }, []);
   return (
     <>
       <SafeAreaView style={styles.safeArea} />
@@ -51,7 +59,6 @@ const JerseyDetail = ({route, navigation}) => {
           <Slider image={dataParam.gambar} />
           <View style={styles.content}>
             <View style={styles.wrapperLiga}>
-              {/* <CardLiga data={dataParam.liga} /> */}
               <CardLiga
                 key={dataParam.liga}
                 dataLiga={dataLiga[dataParam.liga]}
@@ -59,7 +66,7 @@ const JerseyDetail = ({route, navigation}) => {
               />
             </View>
             <View style={styles.desc}>
-              <Text style={styles.name}>{dataParam.name}</Text>
+              <Text style={styles.name}>{dataParam.nama}</Text>
               <Text style={styles.price}>
                 Rp {numberWithCommas(dataParam.harga)}
               </Text>
@@ -72,8 +79,8 @@ const JerseyDetail = ({route, navigation}) => {
 
             <View style={styles.contentDesc}>
               <View style={styles.wrapperQualityAndWeight}>
-                <Text style={styles.textQNW}>Jenis : Replika Top Quality</Text>
-                <Text style={styles.textQNW}>Berat : 0.25 kg</Text>
+                <Text style={styles.textQNW}>Jenis : {dataParam.jenis}</Text>
+                <Text style={styles.textQNW}>Berat : {dataParam.berat} kg</Text>
               </View>
               <Gap height={10} />
               <View
@@ -105,6 +112,11 @@ const JerseyDetail = ({route, navigation}) => {
             </View>
           </View>
         </KeyboardAwareScrollView>
+        {loading && (
+          <View style={{position: 'absolute', marginTop: 50}}>
+            <Loading />
+          </View>
+        )}
       </SafeAreaView>
     </>
   );
