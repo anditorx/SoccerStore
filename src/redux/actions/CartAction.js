@@ -6,10 +6,11 @@ import {
   dispatchRequest,
   dispatchSuccess,
   dispatchFailed,
+  navigate,
 } from '../../utils';
 import * as ActionTypes from '../actionTypes.js';
 
-export const doAddToCart = data => {
+export const doAddToCart = (data, navigation) => {
   return dispatch => {
     dispatchRequest(dispatch, ActionTypes.ADD_TO_CART_REQUEST);
     // check data from db
@@ -19,7 +20,6 @@ export const doAddToCart = data => {
         //
         if (querySnapshot.val()) {
           // update cart
-          let mainCart = querySnapshot.val() ? querySnapshot.val() : [];
           const hargaBaru = parseInt(data.jumlah) * parseInt(data.jersey.harga);
           const beratBaru =
             parseInt(data.jumlah) * parseFloat(data.jersey.berat);
@@ -32,7 +32,7 @@ export const doAddToCart = data => {
               totalHarga: hargaBaru,
             })
             .then(response => {
-              dispatch(doAddToCartDetail(data));
+              dispatch(doAddToCartDetail(data, navigation));
             })
             .catch(error => {
               dispatchFailed(dispatch, ActionTypes.ADD_TO_CART_FAILED, error);
@@ -51,7 +51,7 @@ export const doAddToCart = data => {
             .child(data.uid)
             .set(mainCart)
             .then(response => {
-              dispatch(doAddToCartDetail(data));
+              dispatch(doAddToCartDetail(data, navigation));
             })
             .catch(error => {
               dispatchFailed(dispatch, ActionTypes.ADD_TO_CART_FAILED, error);
@@ -65,7 +65,7 @@ export const doAddToCart = data => {
   };
 };
 
-export const doAddToCartDetail = data => {
+export const doAddToCartDetail = (data, navigation) => {
   return dispatch => {
     const orders = {
       product: data.jersey,
@@ -77,7 +77,7 @@ export const doAddToCartDetail = data => {
     };
     // save to firebase
     FIREBASE.database()
-      .ref('keranjangs' + data.uid)
+      .ref('keranjangs/' + data.uid)
       .child('pesanans')
       .push(orders)
       .then(response => {
@@ -86,6 +86,7 @@ export const doAddToCartDetail = data => {
           ActionTypes.ADD_TO_CART_SUCCESS,
           response ? response : [],
         );
+        navigation.navigate('Cart');
       })
       .catch(error => {
         dispatchFailed(dispatch, ActionTypes.ADD_TO_CART_FAILED, error);

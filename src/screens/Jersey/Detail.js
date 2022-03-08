@@ -30,16 +30,16 @@ import {
 import {getDataStorage, numberWithCommas, useForm} from '../../utils';
 import {RFValue} from 'react-native-responsive-fontsize';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {CONSTANT} from '../../constant';
+import {doAddToCart} from '../../redux/actions';
 
 const actionSheetRef = createRef();
 const JerseyDetail = ({route, navigation}) => {
+  const dispatch = useDispatch();
   const dataParam = route.params;
-  console.tron.log('🚀 ~ dataParam :=>', dataParam);
-  const {dataLiga, loadingLiga, successLiga, errorMessageLiga} = useSelector(
-    state => state.LigaReducer,
-  );
+  const {dataLiga} = useSelector(state => state.LigaReducer);
+  const {dataCart, loadingCart} = useSelector(state => state.CartReducer);
   const [dataProfile, setDataProfile] = useState('');
   const [disable, setDisable] = useState(true);
 
@@ -81,8 +81,7 @@ const JerseyDetail = ({route, navigation}) => {
   };
 
   const handleAddToCart = () => {
-    console.tron.log('🚀 ~ uid :=>', form.uid);
-    console.tron.log('🚀 ~ form :=>', form);
+    dispatch(doAddToCart(form, navigation));
   };
 
   return (
@@ -155,6 +154,7 @@ const JerseyDetail = ({route, navigation}) => {
               <Gap height={25} />
               <Button
                 disable={disable}
+                submiting={loadingCart}
                 text="Masukkan Keranjang"
                 icon={IC_ShoppingCartWhite}
                 onPress={handleAddToCart}
