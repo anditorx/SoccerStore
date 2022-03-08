@@ -27,10 +27,11 @@ import {
   responsiveWidth,
   windowHeight,
 } from '../../utils/responsive';
-import {numberWithCommas} from '../../utils';
+import {getDataStorage, numberWithCommas, useForm} from '../../utils';
 import {RFValue} from 'react-native-responsive-fontsize';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {useSelector} from 'react-redux';
+import {CONSTANT} from '../../constant';
 
 const actionSheetRef = createRef();
 const JerseyDetail = ({route, navigation}) => {
@@ -39,12 +40,51 @@ const JerseyDetail = ({route, navigation}) => {
   const {dataLiga, loadingLiga, successLiga, errorMessageLiga} = useSelector(
     state => state.LigaReducer,
   );
+  const [dataProfile, setDataProfile] = useState('');
+  const [disable, setDisable] = useState(true);
+
+  const [form, setForm] = useForm({
+    jumlah: '1',
+    ukuran: '',
+    keterangan: '',
+    uid: '',
+    jersey: dataParam,
+  });
+
   const [loading, setLoading] = useState(true);
   useEffect(() => {
+    getDataUser();
     setTimeout(() => {
       setLoading(false);
     }, 5000);
-  }, []);
+  }, [getDataUser]);
+
+  const handlePickerUkuran = option => {
+    setForm('ukuran', option.label);
+    setDisable(false);
+  };
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const getDataUser = () => {
+    getDataStorage(CONSTANT.STORAGE_DATAUSER)
+      .then(res => {
+        const data = res;
+        if (data) {
+          setDataProfile(data);
+          setForm('uid', data.uid);
+        }
+      })
+      .catch(err => {
+        // error
+        navigation.replace('Login');
+      });
+  };
+
+  const handleAddToCart = () => {
+    console.tron.log('🚀 ~ uid :=>', form.uid);
+    console.tron.log('🚀 ~ form :=>', form);
+  };
+
   return (
     <>
       <SafeAreaView style={styles.safeArea} />
@@ -90,7 +130,8 @@ const JerseyDetail = ({route, navigation}) => {
                   width={responsiveWidth(120)}
                   height={responsiveHeight(45)}
                   fontSize={13}
-                  placeholder="0"
+                  value={form.jumlah}
+                  onChangeText={text => setForm('jumlah', text)}
                 />
                 <Picker
                   type="picker"
@@ -99,6 +140,8 @@ const JerseyDetail = ({route, navigation}) => {
                   height={responsiveHeight(45)}
                   fontSize={13}
                   datas={dataParam.ukuran}
+                  value={form.ukuran}
+                  onSelected={handlePickerUkuran}
                 />
               </View>
               <Input
@@ -106,9 +149,16 @@ const JerseyDetail = ({route, navigation}) => {
                 label="Keterangan"
                 fontSize={13}
                 placeholder="Keterangan"
+                value={form.keterangan}
+                onChangeText={text => setForm('keterangan', text)}
               />
               <Gap height={25} />
-              <Button text="Masukkan Keranjang" icon={IC_ShoppingCartWhite} />
+              <Button
+                disable={disable}
+                text="Masukkan Keranjang"
+                icon={IC_ShoppingCartWhite}
+                onPress={handleAddToCart}
+              />
             </View>
           </View>
         </KeyboardAwareScrollView>
