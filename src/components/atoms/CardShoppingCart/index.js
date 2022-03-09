@@ -11,7 +11,7 @@ import {
 const CardShoppingCart = ({data}) => {
   return (
     <View style={styles.container}>
-      <Image source={data.product.gambar[0]} style={styles.image} />
+      <Image source={{uri: data.product.gambar[0]}} style={styles.image} />
       <View style={{flex: 1, marginLeft: 10}}>
         <Text style={{fontFamily: fonts.Bold}}>{data.product.nama}</Text>
         <Text>Harga: Rp{numberWithCommas(data.product.harga)}</Text>

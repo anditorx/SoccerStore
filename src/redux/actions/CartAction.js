@@ -93,3 +93,23 @@ export const doAddToCartDetail = (data, navigation) => {
       });
   };
 };
+
+export const doGetCartList = (id, navigation) => {
+  return dispatch => {
+    dispatchRequest(dispatch, ActionTypes.GET_CART_LIST_REQUEST);
+    // get data from firebase
+    FIREBASE.database()
+      .ref('keranjangs/' + id)
+      .once('value', querySnapshot => {
+        if (querySnapshot.val()) {
+          dispatchSuccess(
+            dispatch,
+            ActionTypes.GET_CART_LIST_SUCCESS,
+            querySnapshot.val() ? querySnapshot.val() : false,
+          );
+        } else {
+          dispatchSuccess(dispatch, ActionTypes.GET_CART_LIST_SUCCESS, false);
+        }
+      });
+  };
+};

@@ -24,16 +24,9 @@ const index = ({type, data, name, icon, onPress}) => {
   );
   const {dataJersey, loadingJersey, successJersey, errorMessageJersey} =
     useSelector(state => state.JerseyReducer);
+
   if (type === 'cart-list') {
-    return (
-      <ScrollView showsVerticalScrollIndicator={false}>
-        <View>
-          {data.map((item, index) => {
-            return <CardShoppingCart data={item} key={index} />;
-          })}
-        </View>
-      </ScrollView>
-    );
+    return <View>{data && <CardShoppingCart data={data} />}</View>;
   }
   if (type === 'liga') {
     return (

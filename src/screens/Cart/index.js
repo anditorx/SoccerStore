@@ -1,9 +1,26 @@
-import React, {useState} from 'react';
-import {SafeAreaView, StatusBar, StyleSheet, Text, View} from 'react-native';
-import {Button, CardShoppingCart, Header, List} from '../../components';
+import React, {useEffect, useState} from 'react';
+import {
+  SafeAreaView,
+  ScrollView,
+  StatusBar,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
+import {useDispatch, useSelector} from 'react-redux';
+import {
+  Button,
+  CardShoppingCart,
+  Header,
+  List,
+  Loading,
+} from '../../components';
+import {CONSTANT} from '../../constant';
+import {doGetCartList} from '../../redux/actions';
 import {colors, IC_ShoppingCartWhite} from '../../res';
 import {DummiesOrders} from '../../res/dummies/orders';
 import {
+  getDataStorage,
   numberWithCommas,
   responsiveHeight,
   windowHeight,
@@ -11,16 +28,42 @@ import {
 } from '../../utils';
 
 const Cart = ({navigation}) => {
+  const dispatch = useDispatch();
   const [orders, setOrders] = useState(DummiesOrders[0]);
+  const [dataProfile, setDataProfile] = useState('');
+  const {dataCart, loadingCart} = useSelector(state => state.CartReducer);
+  useEffect(() => {
+    getCartList();
+  }, [getCartList]);
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const getCartList = () => {
+    getDataStorage(CONSTANT.STORAGE_DATAUSER)
+      .then(res => {
+        const data = res;
+        if (data) {
+          setDataProfile(data);
+          dispatch(doGetCartList(data.uid, navigation));
+        }
+      })
+      .catch(err => {
+        // error
+        navigation.replace('Login');
+      });
+  };
 
   const _renderFooter = () => {
     return (
       <View style={styles.footer}>
         <View style={styles.totalHarga}>
           <Text style={styles.txtTotal}>Total Harga :</Text>
-          <Text style={styles.txtTotal}>
-            Rp {numberWithCommas(orders.totalHarga)}
-          </Text>
+          {dataCart?.totalHarga ? (
+            <Text style={styles.txtTotal}>
+              Rp {numberWithCommas(dataCart.totalHarga)}
+            </Text>
+          ) : (
+            <Text style={styles.txtTotal}>Rp 0</Text>
+          )}
         </View>
         <Button
           text="Checkout"
@@ -38,10 +81,28 @@ const Cart = ({navigation}) => {
       <StatusBar barStyle="dark-content" />
       <Header type="back-and-title" text={'Cart'} />
       <View style={styles.content}>
-        <List type="cart-list" data={orders.pesanans} />
+        <ScrollView showsVerticalScrollIndicator={false}>
+          {dataCart ? (
+            // <List type="cart-list" data={dataCart} />
+            Object.keys(dataCart?.pesanans).map(key => {
+              // return <CardShoppingCart data={data.pesanans[key]} key={key} />;
+              return <List type="cart-list" data={dataCart?.pesanans[key]} />;
+            })
+          ) : (
+            <View style={styles.wrapperNoDataAvailable}>
+              <Text>Tidak ada data</Text>
+            </View>
+          )}
+        </ScrollView>
       </View>
       {/* footer */}
-      {_renderFooter()}
+      {dataCart && dataCart !== [] ? _renderFooter() : null}
+      {/* loading */}
+      {loadingCart && (
+        <View style={styles.wrapperLoading}>
+          <Loading />
+        </View>
+      )}
     </SafeAreaView>
   );
 };
@@ -82,4 +143,10 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 16,
   },
+  wrapperNoDataAvailable: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    flex: 1,
+  },
+  wrapperLoading: {position: 'absolute', marginTop: 50},
 });
