@@ -61,6 +61,32 @@ export default function (state = initialState, action) {
         errorMessageCart: action.payload.errorMessage,
       };
 
+    case ActionTypes.DELETE_CART_ITEM_REQUEST:
+      return {
+        ...state,
+        loadingCart: action.payload.loading,
+        errorCart: false,
+        successCart: false,
+        errorMessageCart: false,
+        dataCart: action.payload.data,
+      };
+    case ActionTypes.DELETE_CART_ITEM_SUCCESS:
+      return {
+        ...state,
+        loadingCart: false,
+        successCart: true,
+        // dataCart: action.payload.data,
+      };
+    case ActionTypes.DELETE_CART_ITEM_FAILED:
+      return {
+        ...state,
+        loadingCart: false,
+        errorCart: true,
+        successCart: false,
+        dataCart: action.payload.data,
+        errorMessageCart: action.payload.errorMessage,
+      };
+
     default:
       return state;
   }

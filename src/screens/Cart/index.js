@@ -16,7 +16,7 @@ import {
   Loading,
 } from '../../components';
 import {CONSTANT} from '../../constant';
-import {doGetCartList} from '../../redux/actions';
+import {doDeleteCartItem, doGetCartList} from '../../redux/actions';
 import {colors, IC_ShoppingCartWhite} from '../../res';
 import {DummiesOrders} from '../../res/dummies/orders';
 import {
@@ -76,6 +76,12 @@ const Cart = ({navigation}) => {
     );
   };
 
+  const _handleDeleteItem = item => {
+    console.tron.log('🚀 ~ dataCart :=>', dataCart);
+    console.tron.log('🚀 ~ delete data :=>', item);
+    // dispatch(doDeleteCartItem())
+  };
+
   return (
     <SafeAreaView style={styles.safeArea}>
       <StatusBar barStyle="dark-content" />
@@ -86,7 +92,15 @@ const Cart = ({navigation}) => {
             // <List type="cart-list" data={dataCart} />
             Object.keys(dataCart?.pesanans).map(key => {
               // return <CardShoppingCart data={data.pesanans[key]} key={key} />;
-              return <List type="cart-list" data={dataCart?.pesanans[key]} />;
+              return (
+                <List
+                  type="cart-list"
+                  data={dataCart?.pesanans[key]}
+                  onPressDelete={() =>
+                    _handleDeleteItem(dataCart?.pesanans[key])
+                  }
+                />
+              );
             })
           ) : (
             <View style={styles.wrapperNoDataAvailable}>

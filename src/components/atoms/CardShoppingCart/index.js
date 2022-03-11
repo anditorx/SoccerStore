@@ -8,9 +8,13 @@ import {
   responsiveWidth,
 } from '../../../utils';
 
-const CardShoppingCart = ({data}) => {
+const CardShoppingCart = ({data, onPressDelete}) => {
+  const _handleDeleteItem = () => {
+    console.tron.log('🚀 ~ delete data :=>', data);
+  };
+
   return (
-    <View style={styles.container}>
+    <TouchableOpacity style={styles.container}>
       <Image source={{uri: data.product.gambar[0]}} style={styles.image} />
       <View style={{flex: 1, marginLeft: 10}}>
         <Text style={{fontFamily: fonts.Bold}}>{data.product.nama}</Text>
@@ -21,10 +25,10 @@ const CardShoppingCart = ({data}) => {
         <Text>Total Harga: Rp{numberWithCommas(data.totalHarga)}</Text>
         <Text>Keterangan: {data.keterangan}</Text>
       </View>
-      <TouchableOpacity style={styles.viewDelete}>
+      <TouchableOpacity style={styles.viewDelete} onPress={onPressDelete}>
         <IC_CloseRed />
       </TouchableOpacity>
-    </View>
+    </TouchableOpacity>
   );
 };
 

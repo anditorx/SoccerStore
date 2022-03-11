@@ -16,7 +16,7 @@ import {colors, fonts, IC_ArrowRight, IC_EditProfile} from '../../../res';
 import {numberWithCommas} from '../../../utils';
 import {responsiveHeight, responsiveWidth} from '../../../utils/responsive';
 
-const index = ({type, data, name, icon, onPress}) => {
+const index = ({type, data, name, icon, onPress, onPressDelete}) => {
   const navigation = useNavigation();
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const {dataLiga, loadingLiga, successLiga, errorMessageLiga} = useSelector(
@@ -26,7 +26,11 @@ const index = ({type, data, name, icon, onPress}) => {
     useSelector(state => state.JerseyReducer);
 
   if (type === 'cart-list') {
-    return <View>{data && <CardShoppingCart data={data} />}</View>;
+    return (
+      <View>
+        {data && <CardShoppingCart data={data} onPressDelete={onPressDelete} />}
+      </View>
+    );
   }
   if (type === 'liga') {
     return (

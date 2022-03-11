@@ -113,3 +113,61 @@ export const doGetCartList = (id, navigation) => {
       });
   };
 };
+
+export const doDeleteCartItem = (id, mainCart, cart, navigation) => {
+  return dispatch => {
+    dispatchRequest(dispatch, ActionTypes.DELETE_CART_ITEM_REQUEST);
+    const totalHargaBaru = mainCart.totalHarga - cart.totalHarga;
+    const totalBeratBaru = mainCart.totalBerat - cart.totalBerat;
+
+    if (totalHargaBaru === 0) {
+      // delete main cart & detail
+      FIREBASE.database()
+        .ref('keranjangs')
+        .child(mainCart.user)
+        .remove()
+        .then(response => {
+          dispatchSuccess(dispatch, ActionTypes.DELETE_CART_ITEM_SUCCESS);
+        })
+        .catch(error => {
+          dispatchFailed(dispatch, ActionTypes.DELETE_CART_ITEM_FAILED, error);
+          alert(error);
+        });
+    } else {
+      // update main cart
+      FIREBASE.database()
+        .ref('keranjangs')
+        .child(mainCart.user)
+        .update({
+          totalBerat: totalBeratBaru,
+          totalHarga: totalHargaBaru,
+        })
+        .then(response => {
+          // delete orders
+          dispatchSuccess(doDeleteDetailCart(id, mainCart, navigation));
+        })
+        .catch(error => {
+          dispatchFailed(dispatch, ActionTypes.DELETE_CART_ITEM_FAILED, error);
+          alert(error);
+        });
+    }
+  };
+};
+
+export const doDeleteDetailCart = (id, mainCart, navigation) => {
+  return dispatch => {
+    // get data from firebase
+    FIREBASE.database()
+      .ref('keranjangs/' + mainCart.user)
+      .child('pesanans')
+      .child(id)
+      .remove()
+      .then(response => {
+        dispatchSuccess(dispatch, ActionTypes.DELETE_CART_ITEM_SUCCESS);
+      })
+      .catch(error => {
+        dispatchFailed(dispatch, ActionTypes.DELETE_CART_ITEM_FAILED, error);
+        alert(error);
+      });
+  };
+};
