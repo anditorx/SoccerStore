@@ -19,17 +19,17 @@ export const doAddToCart = (data, navigation) => {
       .once('value', querySnapshot => {
         //
         if (querySnapshot.val()) {
-          // update cart
+          // update main cart
+          const mainCart = querySnapshot.val();
           const hargaBaru = parseInt(data.jumlah) * parseInt(data.jersey.harga);
           const beratBaru =
             parseInt(data.jumlah) * parseFloat(data.jersey.berat);
-
           FIREBASE.database()
             .ref('keranjangs')
             .child(data.uid)
             .update({
-              totalBerat: beratBaru,
-              totalHarga: hargaBaru,
+              totalBerat: mainCart.totalHarga + beratBaru,
+              totalHarga: mainCart.totalHarga + hargaBaru,
             })
             .then(response => {
               dispatch(doAddToCartDetail(data, navigation));
@@ -38,19 +38,18 @@ export const doAddToCart = (data, navigation) => {
               dispatchFailed(dispatch, ActionTypes.ADD_TO_CART_FAILED, error);
             });
         } else {
-          // save cart
+          // save main cart
           const mainCart = {
             user: data.uid,
             tanggal: new Date().toDateString(),
             totalHarga: parseInt(data.jumlah) * parseInt(data.jersey.harga),
             totalBerat: parseInt(data.jumlah) * parseFloat(data.jersey.berat),
           };
-
           FIREBASE.database()
             .ref('keranjangs')
             .child(data.uid)
             .set(mainCart)
-            .then(response => {
+            .then(() => {
               dispatch(doAddToCartDetail(data, navigation));
             })
             .catch(error => {
@@ -66,6 +65,7 @@ export const doAddToCart = (data, navigation) => {
 };
 
 export const doAddToCartDetail = (data, navigation) => {
+  console.tron.log('🚀 ~ doAddToCartDetail :=>');
   return dispatch => {
     const orders = {
       product: data.jersey,
@@ -75,17 +75,19 @@ export const doAddToCartDetail = (data, navigation) => {
       keterangan: data.keterangan,
       ukuran: data.ukuran,
     };
+    console.tron.log('🚀 ~ orders :=>', orders);
     // save to firebase
     FIREBASE.database()
       .ref('keranjangs/' + data.uid)
       .child('pesanans')
       .push(orders)
       .then(response => {
-        dispatchSuccess(
-          dispatch,
-          ActionTypes.ADD_TO_CART_SUCCESS,
-          response ? response : [],
-        );
+        console.tron.log('🚀 ~ response doAddToCartDetail :=>', response);
+        // dispatchSuccess(
+        //   dispatch,
+        //   ActionTypes.ADD_TO_CART_SUCCESS,
+        //   response ? response : [],
+        // );
         navigation.navigate('Cart');
       })
       .catch(error => {
@@ -102,6 +104,7 @@ export const doGetCartList = (id, navigation) => {
       .ref('keranjangs/' + id)
       .once('value', querySnapshot => {
         if (querySnapshot.val()) {
+          console.tron.log('🚀 ~ getCartList :=>', querySnapshot.val());
           dispatchSuccess(
             dispatch,
             ActionTypes.GET_CART_LIST_SUCCESS,

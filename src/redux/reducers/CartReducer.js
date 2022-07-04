@@ -19,6 +19,7 @@ export default function (state = initialState, action) {
         errorMessageCart: false,
       };
     case ActionTypes.ADD_TO_CART_SUCCESS:
+      console.tron.log('🚀 ~ action :=>', action);
       return {
         ...state,
         loadingCart: false,

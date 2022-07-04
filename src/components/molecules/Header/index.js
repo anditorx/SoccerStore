@@ -1,5 +1,6 @@
 import {NavigationContainer, useNavigation} from '@react-navigation/native';
 import React, {useState} from 'react';
+import {useEffect} from 'react';
 import {
   StyleSheet,
   Text,
@@ -8,10 +9,11 @@ import {
   TextInput,
   TouchableOpacity,
 } from 'react-native';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {ShoppingCart} from '..';
 import {Gap} from '../..';
-import {doSaveKeywordJersey} from '../../../redux/actions';
+import {CONSTANT} from '../../../constant';
+import {doGetCartList, doSaveKeywordJersey} from '../../../redux/actions';
 import {
   colors,
   fonts,
@@ -19,12 +21,41 @@ import {
   IC_Search,
   IC_ShoppingCart,
 } from '../../../res';
+import {getDataStorage} from '../../../utils';
 import {responsiveHeight, windowWidth} from '../../../utils/responsive';
 
 const Header = ({type, icon, onPress, text, page}) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const [search, setSearch] = useState('');
+  const {dataCart, loadingCart} = useSelector(state => state.CartReducer);
+
+  useEffect(() => {
+    getCartList();
+  }, [getCartList]);
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const getCartList = () => {
+    getDataStorage(CONSTANT.STORAGE_DATAUSER)
+      .then(res => {
+        const data = res;
+        if (data) {
+          dispatch(doGetCartList(data.uid));
+        }
+      })
+      .catch(err => {});
+  };
+
+  // sum object
+  function ObjectLength(object) {
+    var length = 0;
+    for (var key in object) {
+      if (object.hasOwnProperty(key)) {
+        ++length;
+      }
+    }
+    return length;
+  }
 
   if (type === 'back-and-title') {
     return (
@@ -70,7 +101,9 @@ const Header = ({type, icon, onPress, text, page}) => {
         </View>
         <Gap width={20} />
         <View style={styles.sectionCart}>
-          <ShoppingCart value={1} />
+          <ShoppingCart
+            value={dataCart ? ObjectLength(dataCart?.pesanans) : null}
+          />
         </View>
       </View>
     </View>

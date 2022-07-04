@@ -57,6 +57,7 @@ const Cart = ({navigation}) => {
       <View style={styles.footer}>
         <View style={styles.totalHarga}>
           <Text style={styles.txtTotal}>Total Harga :</Text>
+          {console.tron.log('🚀 ~ dataCart :=>', dataCart)}
           {dataCart?.totalHarga ? (
             <Text style={styles.txtTotal}>
               Rp {numberWithCommas(dataCart.totalHarga)}

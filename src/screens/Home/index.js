@@ -12,18 +12,25 @@ import {BannerSlider, Gap, Header, List, Loading} from '../../components';
 import {colors, fonts} from '../../res';
 import {Liga} from '../../res/dummies/liga';
 import {DummiesJersey} from '../../res/dummies/jersey';
-import {windowHeight, windowWidth} from '../../utils';
+import {getDataStorage, windowHeight, windowWidth} from '../../utils';
 // redux
 import {connect, useDispatch, useSelector} from 'react-redux';
-import {doGetListJersey, doGetListLiga, getUser} from '../../redux/actions';
+import {
+  doGetCartList,
+  doGetListJersey,
+  doGetListLiga,
+  getUser,
+} from '../../redux/actions';
 
 import {useIsFocused} from '@react-navigation/native';
+import {CONSTANT} from '../../constant';
 
 const Home = ({navigation}) => {
   const isFocused = useIsFocused();
   const dispatch = useDispatch();
   const {dataUser} = useSelector(state => state.UserReducer);
   const {loadingJersey} = useSelector(state => state.JerseyReducer);
+
   useEffect(() => {
     dispatch(getUser());
     dispatch(doGetListLiga());
@@ -31,7 +38,10 @@ const Home = ({navigation}) => {
   }, [dispatch]);
 
   useEffect(() => {
-    isFocused && dispatch(doGetListJersey());
+    // isFocused && dispatch(doGetListJersey());
+    if (isFocused) {
+      dispatch(doGetListJersey());
+    }
   }, [dispatch, isFocused]);
 
   return (
